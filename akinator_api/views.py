@@ -1,12 +1,45 @@
-from django.shortcuts import render
-
 # Create your views here.
-from rest_framework import viewsets
+from rest_framework import mixins
+from rest_framework.decorators import action
+from rest_framework.response import Response
+from rest_framework.viewsets import GenericViewSet
 
-from akinator_api import models
-from akinator_api.serializers import CharacterSerializer
+from akinator_api import models, serializers
 
 
-class CharacterView(viewsets.ModelViewSet):
-    serializer_class = CharacterSerializer
-    queryset = models.Character.objects.all().order_by("-id")
+class CharacterView(mixins.CreateModelMixin,
+                    mixins.UpdateModelMixin,
+                    mixins.RetrieveModelMixin,
+                    mixins.ListModelMixin,
+                    GenericViewSet):
+    serializer_class = serializers.CharacterSerializer
+    queryset = models.Character.objects.all().order_by('-id')
+
+    def get_serializer_class(self):
+        if self.action in ['add_answers', 'delete_answers']:
+            return serializers.CharacterAnswersSerializer
+        return super().get_serializer_class()
+
+    @action(detail=True, methods=['post', 'get'], url_name='akinator-character-add_question')
+    def add_answers(self, request, pk=None, *args, **kwargs):
+        parent_object = self.get_object()
+        serializer = self.get_serializer(data=request.data, context={'parent_object': parent_object})
+        serializer.is_valid(raise_exception=True)
+        serializer.create(serializer.validated_data)
+        return Response(serializer.data)
+
+    @action(detail=True, methods=['post', 'get'], url_name='akinator-character-delete_question')
+    def delete_answers(self, request, pk=None, *args, **kwargs):
+        parent_object = self.get_object()
+        serializer = self.get_serializer(data=request.data, context={'parent_object': parent_object})
+        serializer.is_valid(raise_exception=True)
+        serializer.delete(serializer.validated_data)
+        return Response(serializer.data)
+
+
+class QuestionView(mixins.CreateModelMixin,
+                   mixins.RetrieveModelMixin,
+                   mixins.ListModelMixin,
+                   GenericViewSet):
+    serializer_class = serializers.QuestionSerializer
+    queryset = models.Question.objects.all().order_by('-id')
