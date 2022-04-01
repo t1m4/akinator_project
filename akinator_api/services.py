@@ -8,7 +8,7 @@ def get_object_or_error(model, object_id: int, **kwargs):
         raise ValidationError('Object {} with id={} - DoesNotExist'.format(model._meta.model_name.title(), object_id))
 
 
-def get_element_index_by_value(current_list, value):
+def get_list_index_or_error(current_list, value):
     try:
         return current_list.index(value)
     except ValueError:

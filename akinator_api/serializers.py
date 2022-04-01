@@ -45,7 +45,7 @@ class CharacterAnswersSerializer(serializers.Serializer):
         delete_answers = validated_data.get('answers')
         parent_object = self.context['parent_object']
         for delete_answer in delete_answers:
-            delete_answer_index = services.get_element_index_by_value(parent_object.answers, delete_answer)
+            delete_answer_index = services.get_list_index_or_error(parent_object.answers, delete_answer)
             services.get_object_or_error(models.Question, delete_answer['id'])
             del parent_object.answers[delete_answer_index]
         parent_object.save(update_fields=['answers'])
