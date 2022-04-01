@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import path, include
 
 urlpatterns = [
-    path('', include('akinator.urls')),
-    path('api/', include('akinator_api.urls')),
-    path('admin/', admin.site.urls),
+    path("", include("akinator.urls")),
+    path("api/", include("akinator_api.urls")),
+    path("admin/", admin.site.urls),
 ]

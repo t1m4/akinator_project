@@ -9,4 +9,4 @@ from akinator_api.serializers import CharacterSerializer
 
 class CharacterView(viewsets.ModelViewSet):
     serializer_class = CharacterSerializer
-    queryset = models.Character.objects.all().order_by('-id')
+    queryset = models.Character.objects.all().order_by("-id")

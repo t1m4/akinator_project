@@ -5,8 +5,7 @@ from . import views
 
 router = DefaultRouter()
 
-router.register('character', views.CharacterView, basename='akinator-character')
+router.register("character", views.CharacterView, basename="akinator-character")
 
 
-urlpatterns = [
-] + router.urls
+urlpatterns = [] + router.urls

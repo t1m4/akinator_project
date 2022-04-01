@@ -16,8 +16,8 @@ class CharacterSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.Character
-        fields = ('id', 'name', 'answers')
-        read_only = ('image_url')
+        fields = ("id", "name", "answers")
+        read_only = "image_url"
 
     def create(self, validated_data):
         print(validated_data)
