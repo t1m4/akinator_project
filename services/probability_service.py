@@ -27,13 +27,21 @@ class ProbabilityService(object):
         init_character_probability = 1 / self.characters_count
 
         # Likelihood
-        character_previous_probabilities = self.user_game.probabilities.get(str(character['id']), {})
-        character_total_probability = character_previous_probabilities.get('character_total_probability', 1)
-        exclude_character_total_probability = character_previous_probabilities.get('exclude_character_total_probability', 1)
+        character_previous_probabilities = self.user_game.probabilities.get(
+            str(character["id"]), {}
+        )
+        character_total_probability = character_previous_probabilities.get(
+            "character_total_probability", 1
+        )
+        exclude_character_total_probability = character_previous_probabilities.get(
+            "exclude_character_total_probability", 1
+        )
 
         user_answer = self.user_game.answers[-1]
         answer = float(user_answer["answer"])
-        character_total_probability *= max(1 - abs(answer - self.character_answer(character, user_answer)), 0.01)
+        character_total_probability *= max(
+            1 - abs(answer - self.character_answer(character, user_answer)), 0.01
+        )
         p_answer_not_character = np.mean(
             [
                 1 - abs(answer - self.character_answer(not_character, user_answer))
@@ -41,9 +49,12 @@ class ProbabilityService(object):
                 if not_character["id"] != character["id"]
             ]
         )
-        exclude_character_total_probability *= max(p_answer_not_character, np.float64(0.01))
-        self.save_probabilities(character, character_total_probability, exclude_character_total_probability)
-
+        exclude_character_total_probability *= max(
+            p_answer_not_character, np.float64(0.01)
+        )
+        self.save_probabilities(
+            character, character_total_probability, exclude_character_total_probability
+        )
 
         # Evidence
         independent_probability = (
@@ -63,9 +74,14 @@ class ProbabilityService(object):
                 return answer["answer"]
         return 0.5
 
-    def save_probabilities(self, character, character_total_probability, exclude_character_total_probability):
-        self.user_game.probabilities[character['id']] = {
-            'character_total_probability': character_total_probability,
-            'exclude_character_total_probability': exclude_character_total_probability,
+    def save_probabilities(
+        self,
+        character,
+        character_total_probability,
+        exclude_character_total_probability,
+    ):
+        self.user_game.probabilities[character["id"]] = {
+            "character_total_probability": character_total_probability,
+            "exclude_character_total_probability": exclude_character_total_probability,
         }
-        self.user_game.save(update_fields=['probabilities'])
+        self.user_game.save(update_fields=["probabilities"])

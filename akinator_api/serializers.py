@@ -49,8 +49,9 @@ class UserGameSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.UserGame
         fields = "__all__"
-        read_only_fields = ('predicted_character', 'probabilities')
+        read_only_fields = ("predicted_character", "probabilities")
         # exclude = ('probabilities',)
+
 
 class UserGameAnswerSerializer(serializers.Serializer):
     answers = AnswerSerializer(many=True, required=True)
