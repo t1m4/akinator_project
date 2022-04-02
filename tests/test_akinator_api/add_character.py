@@ -38,62 +38,60 @@ def main():
         "name": "Homer Simpson",
         "answers": [
             {
-                'id': 1,
-                'answer': 1,
+                "id": 1,
+                "answer": 1,
             },
             {
-                'id': 2,
-                'answer': 1,
+                "id": 2,
+                "answer": 1,
             },
             {
-                'id': 3,
-                'answer': 1,
+                "id": 3,
+                "answer": 1,
             },
             {
-                'id': 4,
-                'answer': 0,
+                "id": 4,
+                "answer": 0,
             },
-
-        ]
+        ],
     }
     character_data = {
         "name": "SpongeBob SquarePants",
         "answers": [
             {
-                'id': 1,
-                'answer': 1,
+                "id": 1,
+                "answer": 1,
             },
             {
-                'id': 2,
-                'answer': 1,
+                "id": 2,
+                "answer": 1,
             },
             {
-                'id': 3,
-                'answer': 1,
+                "id": 3,
+                "answer": 1,
             },
             {
-                'id': 4,
-                'answer': 0.75,
+                "id": 4,
+                "answer": 0.75,
             },
-
-        ]
+        ],
     }
     character_data = {
         "name": "Sandy Cheeks",
         "answers": [
             {
-                'id': 1,
-                'answer': 0,
+                "id": 1,
+                "answer": 0,
             },
             {
-                'id': 2,
-                'answer': 0,
+                "id": 2,
+                "answer": 0,
             },
             {
-                'id': 3,
-                'answer': 0,
+                "id": 3,
+                "answer": 0,
             },
-        ]
+        ],
     }
 
     game_data = {
@@ -102,7 +100,7 @@ def main():
         "is_finished": False,
         "user_answer": "",
         "user_character_id": None,
-        "predicted_character": None
+        "predicted_character": None,
     }
 
     answers_data = {

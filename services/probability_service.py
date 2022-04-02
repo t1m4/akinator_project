@@ -7,14 +7,14 @@ class ProbabilityService(object):
     def __init__(self, user_answers):
         self.user_answers = user_answers
         self.characters_count = models.Character.objects.all().count()
-        self.characters = models.Character.objects.all().values('id', 'answers', 'name')
+        self.characters = models.Character.objects.all().values("id", "answers", "name")
 
     def calculate_probabilities(self):
         probabilities = []
         for character in self.characters:
             probabilities.append(
                 {
-                    "id": character['id'],
+                    "id": character["id"],
                     "probability": self.calculate_character_probability(character),
                 }
             )
@@ -30,30 +30,39 @@ class ProbabilityService(object):
         character_total_probability = 1
         exclude_character_total_probability = 1
         for user_answer in self.user_answers:
-            answer = float(user_answer['answer'])
-            character_total_probability *= max(1 - abs(answer - self.character_answer(character, user_answer)), 0.01)
+            answer = float(user_answer["answer"])
+            character_total_probability *= max(
+                1 - abs(answer - self.character_answer(character, user_answer)), 0.01
+            )
 
             p_answer_not_character = np.mean(
                 [
                     1 - abs(answer - self.character_answer(not_character, user_answer))
                     for not_character in self.characters
-                    if not_character['id'] != character['id']
+                    if not_character["id"] != character["id"]
                 ]
             )
 
-            exclude_character_total_probability *= max(p_answer_not_character, np.float64(0.01))
+            exclude_character_total_probability *= max(
+                p_answer_not_character, np.float64(0.01)
+            )
             # print("result {:30} {:20} {:20}".format(character['name'], exclude_character_total_probability, character_total_probability))
 
         # Evidence
-        independent_probability = character_total_probability * init_character_probability + (1 - init_character_probability) * exclude_character_total_probability
+        independent_probability = (
+            character_total_probability * init_character_probability
+            + (1 - init_character_probability) * exclude_character_total_probability
+        )
 
         # Bayes Theorem
-        inverse_probability = (character_total_probability * init_character_probability) / independent_probability
+        inverse_probability = (
+            character_total_probability * init_character_probability
+        ) / independent_probability
         return inverse_probability
 
     @staticmethod
     def character_answer(character, question):
-        for answer in character['answers']:
-            if question['id'] == answer['id']:
-                return answer['answer']
+        for answer in character["answers"]:
+            if question["id"] == answer["id"]:
+                return answer["answer"]
         return 0.5

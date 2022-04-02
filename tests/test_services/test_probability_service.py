@@ -5,7 +5,6 @@ from abc import ABC
 import requests
 
 
-
 class Creator(ABC):
     host = "http://127.0.0.1:8000/"
     create_character_url = host + "api/character/"
@@ -34,12 +33,12 @@ def index(question, answer):
 
     # Save game answers
     user_game = models.UserGame.objects.get(id=5)
-    services.add_new_answers_to_object([{'id': question, 'answer': answer}], user_game)
+    services.add_new_answers_to_object([{"id": question, "answer": answer}], user_game)
 
     service_object = probability_service.ProbabilityService(user_game.answers)
     probabilities = service_object.calculate_probabilities()
 
-    answers_questions_ids = [answer['id'] for answer in user_game.answers]
+    answers_questions_ids = [answer["id"] for answer in user_game.answers]
     questions_left = models.Question.objects.exclude(id__in=answers_questions_ids)
     if len(questions_left) == 0:
         result = sorted(probabilities, key=lambda p: p["probability"], reverse=True)[0]
@@ -48,7 +47,7 @@ def index(question, answer):
     else:
         print(f"Left questions {questions_left}")
         # next_question = random.choice(questions_left)
-        next_question = questions_left.order_by('id').first()
+        next_question = questions_left.order_by("id").first()
         return next_question
 
 
@@ -67,7 +66,9 @@ def main():
         next_question = index(next_question.id, int(answer))
         if not next_question.id:
             break
-        answer = input(f"Question number {next_question.id} and question: {next_question.name}")
+        answer = input(
+            f"Question number {next_question.id} and question: {next_question.name}"
+        )
 
 
 if __name__ == "__main__":
