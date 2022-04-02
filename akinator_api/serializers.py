@@ -50,8 +50,13 @@ class UserGameSerializer(serializers.ModelSerializer):
         model = models.UserGame
         fields = "__all__"
 
+
+class UserGameAnswerSerializer(serializers.Serializer):
+    answers = AnswerSerializer(many=True, required=True)
+
     def create(self, validated_data, *args, **kwargs):
         new_answers = validated_data.get("answers")
         parent_object = self.context["parent_object"]
         answers = services.add_new_answers_to_object(new_answers, parent_object)
+        # TODO here we return new answers for user
         return answers

@@ -71,7 +71,7 @@ class UserGameViewSet(
 
     def get_serializer_class(self):
         if self.action in ["add_answers", "delete_answers"]:
-            return serializers.UserGameSerializer
+            return serializers.UserGameAnswerSerializer
         return super().get_serializer_class()
 
     @action(
