@@ -31,8 +31,8 @@ class CharacterView(
             data=request.data, context={"parent_object": parent_object}
         )
         serializer.is_valid(raise_exception=True)
-        serializer.create(serializer.validated_data)
-        return Response(serializer.data)
+        response_data = serializer.create(serializer.validated_data)
+        return Response(response_data)
 
     @action(
         detail=True,
@@ -45,8 +45,8 @@ class CharacterView(
             data=request.data, context={"parent_object": parent_object}
         )
         serializer.is_valid(raise_exception=True)
-        serializer.delete(serializer.validated_data)
-        return Response(serializer.data)
+        response_data = serializer.delete(serializer.validated_data)
+        return Response(response_data)
 
 
 class QuestionViewSet(
@@ -85,5 +85,5 @@ class UserGameViewSet(
             data=request.data, context={"parent_object": parent_object}
         )
         serializer.is_valid(raise_exception=True)
-        serializer.create(serializer.validated_data)
-        return Response(serializer.data)
+        response_data = serializer.create(serializer.validated_data)
+        return Response(response_data)

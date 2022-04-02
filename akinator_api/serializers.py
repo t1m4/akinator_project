@@ -54,4 +54,4 @@ class UserGameSerializer(serializers.ModelSerializer):
         new_answers = validated_data.get("answers")
         parent_object = self.context["parent_object"]
         answers = services.add_new_answers_to_object(new_answers, parent_object)
-        return parent_object
+        return answers
