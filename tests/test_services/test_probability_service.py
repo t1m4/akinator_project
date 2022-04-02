@@ -35,7 +35,7 @@ def index(question, answer):
     user_game = models.UserGame.objects.get(id=5)
     services.add_new_answers_to_object([{"id": question, "answer": answer}], user_game)
 
-    service_object = probability_service.ProbabilityService(user_game.answers)
+    service_object = probability_service.ProbabilityService(user_game)
     probabilities = service_object.calculate_probabilities()
 
     answers_questions_ids = [answer["id"] for answer in user_game.answers]
@@ -56,6 +56,7 @@ def main():
 
     user_game = models.UserGame.objects.get(id=5)
     user_game.answers = []
+    user_game.probabilities = {}
     user_game.save()
 
     questions = models.Question.objects.all().order_by("id")
