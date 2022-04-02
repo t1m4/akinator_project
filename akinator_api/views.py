@@ -7,48 +7,83 @@ from rest_framework.viewsets import GenericViewSet
 from akinator_api import models, serializers
 
 
-class CharacterView(mixins.CreateModelMixin,
-                    mixins.UpdateModelMixin,
-                    mixins.RetrieveModelMixin,
-                    mixins.ListModelMixin,
-                    GenericViewSet):
+class CharacterView(
+    mixins.CreateModelMixin,
+    mixins.UpdateModelMixin,
+    mixins.RetrieveModelMixin,
+    mixins.ListModelMixin,
+    GenericViewSet,
+):
     serializer_class = serializers.CharacterSerializer
-    queryset = models.Character.objects.all().order_by('-id')
+    queryset = models.Character.objects.all().order_by("-id")
 
     def get_serializer_class(self):
-        if self.action in ['add_answers', 'delete_answers']:
+        if self.action in ["add_answers", "delete_answers"]:
             return serializers.CharacterAnswersSerializer
         return super().get_serializer_class()
 
-    @action(detail=True, methods=['post', 'get'], url_name='akinator-character-add_question')
+    @action(
+        detail=True, methods=["post", "get"], url_name="akinator-character-add_answers"
+    )
     def add_answers(self, request, pk=None, *args, **kwargs):
         parent_object = self.get_object()
-        serializer = self.get_serializer(data=request.data, context={'parent_object': parent_object})
+        serializer = self.get_serializer(
+            data=request.data, context={"parent_object": parent_object}
+        )
         serializer.is_valid(raise_exception=True)
         serializer.create(serializer.validated_data)
         return Response(serializer.data)
 
-    @action(detail=True, methods=['post', 'get'], url_name='akinator-character-delete_question')
+    @action(
+        detail=True,
+        methods=["post", "get"],
+        url_name="akinator-character-delete_answers",
+    )
     def delete_answers(self, request, pk=None, *args, **kwargs):
         parent_object = self.get_object()
-        serializer = self.get_serializer(data=request.data, context={'parent_object': parent_object})
+        serializer = self.get_serializer(
+            data=request.data, context={"parent_object": parent_object}
+        )
         serializer.is_valid(raise_exception=True)
         serializer.delete(serializer.validated_data)
         return Response(serializer.data)
 
 
-class QuestionViewSet(mixins.CreateModelMixin,
-                      mixins.RetrieveModelMixin,
-                      mixins.ListModelMixin,
-                      GenericViewSet):
+class QuestionViewSet(
+    mixins.CreateModelMixin,
+    mixins.RetrieveModelMixin,
+    mixins.ListModelMixin,
+    GenericViewSet,
+):
     serializer_class = serializers.QuestionSerializer
-    queryset = models.Question.objects.all().order_by('-id')
+    queryset = models.Question.objects.all().order_by("-id")
 
 
-class UserGameViewSet(mixins.CreateModelMixin,
-                      mixins.UpdateModelMixin,
-                      mixins.RetrieveModelMixin,
-                      mixins.ListModelMixin,
-                      GenericViewSet):
+class UserGameViewSet(
+    mixins.CreateModelMixin,
+    mixins.UpdateModelMixin,
+    mixins.RetrieveModelMixin,
+    mixins.ListModelMixin,
+    GenericViewSet,
+):
     serializer_class = serializers.UserGameSerializer
-    queryset = models.UserGame.objects.all().order_by('-id')
+    queryset = models.UserGame.objects.all().order_by("-id")
+
+    def get_serializer_class(self):
+        if self.action in ["add_answers", "delete_answers"]:
+            return serializers.UserGameSerializer
+        return super().get_serializer_class()
+
+    @action(
+        detail=True,
+        methods=["post", "get"],
+        url_name="akinator-character-game_add_answers",
+    )
+    def add_answers(self, request, pk=None, *args, **kwargs):
+        parent_object = self.get_object()
+        serializer = self.get_serializer(
+            data=request.data, context={"parent_object": parent_object}
+        )
+        serializer.is_valid(raise_exception=True)
+        serializer.create(serializer.validated_data)
+        return Response(serializer.data)

@@ -8,25 +8,49 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('akinator_api', '0002_auto_20220401_0534'),
+        ("akinator_api", "0002_auto_20220401_0534"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='UserGame',
+            name="UserGame",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('updated_at', models.DateTimeField(auto_now=True)),
-                ('answers', django.contrib.postgres.fields.jsonb.JSONField(blank=True, default=list)),
-                ('is_success_predicted', models.BooleanField(default=False)),
-                ('is_finished', models.BooleanField(default=False)),
-                ('user_answer', models.CharField(blank=True, max_length=256, null=True)),
-                ('user_character_id', models.IntegerField(blank=True, null=True)),
-                ('predicted_character', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.DO_NOTHING, to='akinator_api.Character')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("created_at", models.DateTimeField(auto_now_add=True)),
+                ("updated_at", models.DateTimeField(auto_now=True)),
+                (
+                    "answers",
+                    django.contrib.postgres.fields.jsonb.JSONField(
+                        blank=True, default=list
+                    ),
+                ),
+                ("is_success_predicted", models.BooleanField(default=False)),
+                ("is_finished", models.BooleanField(default=False)),
+                (
+                    "user_answer",
+                    models.CharField(blank=True, max_length=256, null=True),
+                ),
+                ("user_character_id", models.IntegerField(blank=True, null=True)),
+                (
+                    "predicted_character",
+                    models.ForeignKey(
+                        blank=True,
+                        null=True,
+                        on_delete=django.db.models.deletion.DO_NOTHING,
+                        to="akinator_api.Character",
+                    ),
+                ),
             ],
             options={
-                'abstract': False,
+                "abstract": False,
             },
         ),
     ]

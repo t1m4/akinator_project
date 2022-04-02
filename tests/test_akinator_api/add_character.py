@@ -9,6 +9,7 @@ class Creator(ABC):
     create_character_url = host + "api/character"
     add_character_answers_url = host + "api/character/<character_id>/add_answers/"
     delete_character_answers_url = host + "api/character/<character_id>/delete_answers/"
+    add_game_answers_url = host + "api/games/<game_id>/add_answers/"
     create_game_url = host + "api/games/"
 
     def create_object(self, url, data):
@@ -26,22 +27,43 @@ class Creator(ABC):
 
 def main():
     creator = Creator()
-    game_data = {
-        "answers": [],
-        "is_success_predicted": False,
-        "is_finished": False,
-        "user_answer": "",
-        # "user_character_id": None,
-        # "predicted_character": None
+    # game_data = {
+    #     "answers": [],
+    #     "is_success_predicted": False,
+    #     "is_finished": False,
+    #     "user_answer": "",
+    #     "user_character_id": None,
+    #     "predicted_character": None
+    # }
+
+    answers_data = {
+        "answers": [
+            {
+                "id": 3,
+                "answer": 1,
+            },
+            # {
+            #     'id': 2,
+            #     'answer': 0.5,
+            # }
+        ]
     }
-    response = creator.create_object(creator.create_game_url, game_data)
+    character_id = "1"
+    game_id = "1"
+    # response = creator.create_object(creator.create_game_url, game_data)
+    # response = creator.create_object(creator.add_character_answers_url.replace("<character_id>", character_id), answers_data)
+    # response = creator.create_object(creator.delete_character_answers_url.replace("<character_id>", character_id), answers_data)
+    response = creator.create_object(
+        creator.add_game_answers_url.replace("<game_id>", game_id), answers_data
+    )
+    # response = creator.create_object(creator.delete_game_answers_url.replace("<game_id>", game_id), answers_data)
 
 
 if __name__ == "__main__":
     import os
     import sys
 
-    sys.path.append('/home/ruslan/PycharmProjects/akinator_project')
+    sys.path.append("/home/ruslan/PycharmProjects/akinator_project")
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "akinator_platform.settings")
     import django
 

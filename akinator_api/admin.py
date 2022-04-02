@@ -5,7 +5,7 @@ from akinator_api import models
 
 
 class CharacterAdmin(admin.ModelAdmin):
-    list_display = ['id', 'name', 'image_url', 'answers']
+    list_display = ["id", "name", "image_url", "answers"]
 
 
 admin.site.register(models.Character, CharacterAdmin)

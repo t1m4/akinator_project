@@ -17,8 +17,9 @@ class Question(ModelWithCreateAndUpdateDates):
 
 class UserGame(ModelWithCreateAndUpdateDates):
     answers = JSONField(blank=True, default=list)
-    predicted_character = models.ForeignKey('akinator_api.Character', on_delete=models.DO_NOTHING, blank=True,
-                                            null=True)
+    predicted_character = models.ForeignKey(
+        "akinator_api.Character", on_delete=models.DO_NOTHING, blank=True, null=True
+    )
     is_success_predicted = models.BooleanField(default=False)
     is_finished = models.BooleanField(default=False)
     user_answer = models.CharField(max_length=256, blank=True, null=True)

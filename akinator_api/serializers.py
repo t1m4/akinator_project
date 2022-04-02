@@ -24,37 +24,34 @@ class CharacterSerializer(serializers.ModelSerializer):
 class QuestionSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Question
-        fields = ('id', 'name')
+        fields = ("id", "name")
 
 
 class CharacterAnswersSerializer(serializers.Serializer):
     answers = AnswerSerializer(many=True, required=True)
 
     def create(self, validated_data, *args, **kwargs):
-        new_answers = validated_data.get('answers')
-        parent_object = self.context['parent_object']
-        for new_answer in new_answers:
-            if new_answer in parent_object.answers:
-                continue
-            services.get_object_or_error(models.Question, new_answer['id'])
-            parent_object.answers.append(new_answer)
-        parent_object.save(update_fields=['answers'])
-        return parent_object.answers
+        new_answers = validated_data.get("answers")
+        parent_object = self.context["parent_object"]
+        answers = services.add_new_answers_to_object(new_answers, parent_object)
+        return answers
 
     def delete(self, validated_data, *args, **kwargs):
-        delete_answers = validated_data.get('answers')
-        parent_object = self.context['parent_object']
-        for delete_answer in delete_answers:
-            delete_answer_index = services.get_list_index_or_error(parent_object.answers, delete_answer)
-            services.get_object_or_error(models.Question, delete_answer['id'])
-            del parent_object.answers[delete_answer_index]
-        parent_object.save(update_fields=['answers'])
-        return parent_object.answers
+        delete_answers = validated_data.get("answers")
+        parent_object = self.context["parent_object"]
+        answers = services.delete_answers_from_object(delete_answers, parent_object)
+        return answers
 
 
 class UserGameSerializer(serializers.ModelSerializer):
     answers = AnswerSerializer(many=True, allow_empty=True)
+
     class Meta:
         model = models.UserGame
-        # fields = ('id', 'answers', 'predicted_character', 'is_success_predicted', 'is_finished', '')
-        fields = '__all__'
+        fields = "__all__"
+
+    def create(self, validated_data, *args, **kwargs):
+        new_answers = validated_data.get("answers")
+        parent_object = self.context["parent_object"]
+        answers = services.add_new_answers_to_object(new_answers, parent_object)
+        return parent_object
