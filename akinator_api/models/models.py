@@ -24,3 +24,6 @@ class UserGame(ModelWithCreateAndUpdateDates):
     is_finished = models.BooleanField(default=False)
     user_answer = models.CharField(max_length=256, blank=True, null=True)
     user_character_id = models.IntegerField(blank=True, null=True)
+
+    # ProbabilityService
+    probabilities = JSONField(null=True, blank=True, default=dict)
