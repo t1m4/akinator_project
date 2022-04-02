@@ -39,6 +39,7 @@ INSTALLED_APPS = [
 
 INSTALLED_APPS += [
     "rest_framework",
+    "bootstrap4"
 ]
 INSTALLED_APPS += [
     "akinator",
@@ -58,10 +59,11 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = "akinator_platform.urls"
 
+print(BASE_DIR + 'templates')
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [ BASE_DIR + '/templates'],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -133,14 +135,17 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
-STATIC_URL = "/static/"
-
+STATIC_URL = '/static/'
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, "static"),
+)
 
 REST_FRAMEWORK = {
-    # 'DEFAULT_RENDERER_CLASSES': ('rest_framework.renderers.JSONRenderer',),
+    # 'DEFAULT_RENDERER_CLASSES': ('rest_framework.renderers.JSONRenderer', 'rest_framework.renderers.BrowsableAPIRenderer',),
     "DEFAULT_VERSIONING_CLASS": "rest_framework.versioning.URLPathVersioning",
     "DEFAULT_VERSION": "v1",
     "ALLOWED_VERSIONS": ["v1", "v2"],
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.LimitOffsetPagination",
+    # "PAGE_SIZE": 1000,
     "PAGE_SIZE": 1000,
 }

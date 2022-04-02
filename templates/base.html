@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+{% load static %}
+{% load bootstrap4 %}
+{% bootstrap_javascript jquery='full' %}
+{% bootstrap_css %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% block title %}
+    <title>Akinator</title>
+    {% endblock %}
+    {% block style %}
+    <!--    <link rel="stylesheet" href="{% static 'core/css/style.css' %}">-->
+    {% endblock %}
+
+</head>
+<body>
+{% block navigation %}{% endblock %}
+{% block content %} {% endblock %}
+{% block body %}{% endblock %}
+{% block scripts %}{% endblock %}
+</body>
+</html>

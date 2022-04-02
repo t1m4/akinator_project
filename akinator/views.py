@@ -10,4 +10,4 @@ from akinator.forms import QuestionForm
 class IndexView(APIView):
     def get(self, request, *args, **kwargs):
         form = QuestionForm()
-        return render(request, "akinator/index.html", context={"form": form})
+        return render(request, "akinator/index.html", )
