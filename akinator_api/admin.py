@@ -10,3 +10,4 @@ class CharacterAdmin(admin.ModelAdmin):
 
 admin.site.register(models.Character, CharacterAdmin)
 admin.site.register(models.Question)
+admin.site.register(models.UserGame)

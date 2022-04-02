@@ -28,7 +28,7 @@ class QuestionSerializer(serializers.ModelSerializer):
 
 
 class CharacterAnswersSerializer(serializers.Serializer):
-    answers = AnswerSerializer(many=True, required=False)
+    answers = AnswerSerializer(many=True, required=True)
 
     def create(self, validated_data, *args, **kwargs):
         new_answers = validated_data.get('answers')
@@ -50,3 +50,11 @@ class CharacterAnswersSerializer(serializers.Serializer):
             del parent_object.answers[delete_answer_index]
         parent_object.save(update_fields=['answers'])
         return parent_object.answers
+
+
+class UserGameSerializer(serializers.ModelSerializer):
+    answers = AnswerSerializer(many=True, allow_empty=True)
+    class Meta:
+        model = models.UserGame
+        # fields = ('id', 'answers', 'predicted_character', 'is_success_predicted', 'is_finished', '')
+        fields = '__all__'

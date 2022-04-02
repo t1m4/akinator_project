@@ -37,9 +37,18 @@ class CharacterView(mixins.CreateModelMixin,
         return Response(serializer.data)
 
 
-class QuestionView(mixins.CreateModelMixin,
-                   mixins.RetrieveModelMixin,
-                   mixins.ListModelMixin,
-                   GenericViewSet):
+class QuestionViewSet(mixins.CreateModelMixin,
+                      mixins.RetrieveModelMixin,
+                      mixins.ListModelMixin,
+                      GenericViewSet):
     serializer_class = serializers.QuestionSerializer
     queryset = models.Question.objects.all().order_by('-id')
+
+
+class UserGameViewSet(mixins.CreateModelMixin,
+                      mixins.UpdateModelMixin,
+                      mixins.RetrieveModelMixin,
+                      mixins.ListModelMixin,
+                      GenericViewSet):
+    serializer_class = serializers.UserGameSerializer
+    queryset = models.UserGame.objects.all().order_by('-id')
