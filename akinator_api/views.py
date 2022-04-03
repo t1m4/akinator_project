@@ -69,11 +69,6 @@ class UserGameViewSet(
     serializer_class = serializers.UserGameSerializer
     queryset = models.UserGame.objects.all().order_by("-id")
 
-    def get_serializer_class(self):
-        if self.action in ["add_answers", "delete_answers"]:
-            return serializers.UserGameAnswerSerializer
-        return super().get_serializer_class()
-
     @action(
         detail=True,
         methods=["post", "get"],
@@ -81,9 +76,10 @@ class UserGameViewSet(
     )
     def add_answers(self, request, pk=None, *args, **kwargs):
         parent_object = self.get_object()
-        serializer = self.get_serializer(
+        serializer = serializers.UserGameAnswerSerializer(
             data=request.data, context={"parent_object": parent_object}
         )
         serializer.is_valid(raise_exception=True)
         response_data = serializer.create(serializer.validated_data)
+        print("response_data", response_data)
         return Response(response_data)

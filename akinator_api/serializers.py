@@ -2,6 +2,7 @@ from rest_framework import serializers
 
 from akinator_api import models, services
 from akinator_api.constants import ANSWER_CHOICES
+from services import probability_service
 
 
 class AnswerSerializer(serializers.Serializer):
@@ -58,7 +59,27 @@ class UserGameAnswerSerializer(serializers.Serializer):
 
     def create(self, validated_data, *args, **kwargs):
         new_answers = validated_data.get("answers")
-        parent_object = self.context["parent_object"]
-        answers = services.add_new_answers_to_object(new_answers, parent_object)
+        game_object = self.context["parent_object"]
+        answers = services.add_new_answers_to_object(new_answers, game_object)
+
+        service_object = probability_service.ProbabilityService(game_object)
+        probabilities = service_object.calculate_probabilities()
+        print('probabilities', probabilities)
+
         # TODO here we return new answers for user
-        return answers
+        answers_questions_ids = [answer["id"] for answer in answers]
+        questions_left = models.Question.objects.exclude(id__in=answers_questions_ids).values('id')
+
+        # TODO change to the level of probabilities
+        if len(questions_left) == 0:
+            # TODO save game data to check, that we already finish the game
+            result = sorted(probabilities, key=lambda p: p["probability"], reverse=True)[0]
+            print(f"You got winner. This is your guess {result}")
+            result['is_finished'] = True
+            return result
+        else:
+            # TODO choose next question using more efficient algorithm
+            # next_question = random.choice(questions_left)
+            next_question = questions_left.order_by("id").values('id', 'name').first()
+            print("left question", questions_left)
+            return next_question

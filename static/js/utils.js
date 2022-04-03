@@ -29,7 +29,7 @@ function isNullVariable(variable) {
 }
 
 function make_request(url, handler_function, method = "GET", body = null, headers = null,) {
-    if (headers == null) {
+    if (isNullVariable(headers)) {
         headers = {
             'Content-Type': 'application/json',
             "X-CSRFToken": getCookie('csrftoken')
@@ -47,3 +47,39 @@ function make_request(url, handler_function, method = "GET", body = null, header
         .then(data => handler_function(data))
 }
 
+function setImageMetaCallback(character_image, width, height) {
+    let defauut_size = 400
+    if (width > defauut_size || height > defauut_size) {
+        character_image.width = defauut_size
+        character_image.height = defauut_size
+    } else {
+        character_image.width = width
+        character_image.height = height
+
+    }
+}
+
+function setImageMeta(url, callback = setImageMetaCallback) {
+    let character_image = characterImageContainer.children[0]
+    character_image.src = url;
+    character_image.onload = function () {
+        callback(character_image, this.width, this.height);
+    }
+}
+
+
+function clearRadioButtons() {
+    var radioButtonArray = document.getElementsByName('radio');
+
+    console.log("arrag", radioButtonArray)
+    for (var i = 0; i < radioButtonArray.length; i++) {
+        var radioButton = radioButtonArray[i];
+        radioButton.checked = false;
+    }
+}
+
+function clearLocalStorage(){
+    localStorage.removeItem(gameIdName)
+    localStorage.removeItem(gameName)
+    localStorage.removeItem(currentQuestionName)
+}
