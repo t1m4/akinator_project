@@ -6,6 +6,8 @@ let gameName = 'game'
 let currentQuestionName = 'currentQuestion'
 let predictedCharacterIdName = 'predictedCharacterId'
 
+let questionText = 'Ответьте на вопрос: '
+
 let game_data = {
     "answers": [],
     "is_success_predicted": false,

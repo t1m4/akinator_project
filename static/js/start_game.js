@@ -20,7 +20,7 @@ function startGame() {
         let question = JSON.parse(localStorage.getItem(currentQuestionName))
         let questionHeader = document.querySelector('.question-text');
         if (!isNullVariable(question)) {
-            questionHeader.textContent = "Question: " + question['name']
+            questionHeader.textContent = questionText + question['name']
         } else {
             clearLocalStorage()
         }

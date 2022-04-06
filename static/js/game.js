@@ -19,7 +19,7 @@ function handleNextQuestionRequest(next_question) {
     if (isNullVariable(next_question['is_finished'])) {
         localStorage.setItem(currentQuestionName, JSON.stringify(next_question))
         let questionHeader = document.querySelector('.question-text');
-        questionHeader.textContent = "Question: " + next_question['name']
+        questionHeader.textContent = questionText + next_question['name']
     } else {
         localStorage.removeItem(currentQuestionName)
         let guess_character_id = next_question['id']
@@ -67,7 +67,7 @@ function handleFirstQuestionRequest(data) {
     // }
     let questionHeader = document.querySelector('.question-text');
     localStorage.setItem(currentQuestionName, JSON.stringify(question))
-    questionHeader.textContent = "Question: " + question['name']
+    questionHeader.textContent = questionText + question['name']
 }
 
 function showFirstQuestion() {
@@ -85,7 +85,7 @@ function main() {
     let question = localStorage.getItem(currentQuestionName)
     let questionHeader = document.querySelector('.question-text');
     if (!isNullVariable(question)) {
-        questionHeader.textContent = "Question: " + question['name']
+        questionHeader.textContent = questionText + question['name']
     }
 
 }
