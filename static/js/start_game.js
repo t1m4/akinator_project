@@ -14,6 +14,8 @@ function startGame() {
     hideObject(characterPredictedYesAnswerContainer)
     hideObject(characterPredictedNoAnswerContainer)
     hideObject(characterPredictedContainer)
+    hideObject(startGameContainer)
+
     let gameId = localStorage.getItem(gameIdName)
     if (!isNullVariable(gameId)) {
         showObject(answerContainer)

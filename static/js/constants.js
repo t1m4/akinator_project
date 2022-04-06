@@ -32,3 +32,5 @@ let saveCharacterInputContainer = document.querySelector('.user-character-name-i
 characterPredictedYesAnswerContainer.addEventListener("change", () => yesAnswerHandler());
 characterPredictedNoAnswerContainer.addEventListener("change", () => noAnswerHandler());
 
+// saveCharacterButtonContainer.addEventListener('click', saveCharacterHandler)
+saveCharacterButtonContainer.addEventListener('click', (e) => saveCharacterHandler(e))

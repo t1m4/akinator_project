@@ -71,10 +71,9 @@ function handleFirstQuestionRequest(data) {
 }
 
 function showFirstQuestion() {
-    hideObject(startGameContainer)
     let gameId = localStorage.getItem(gameIdName)
     if (isNullVariable(gameId)) {
-        alert("You must begin new game!")
+        alert("Вы должны начать новую игру!!!")
     }
     make_request('/api/questions/', handleFirstQuestionRequest)
 

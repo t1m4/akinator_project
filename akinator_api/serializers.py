@@ -70,10 +70,12 @@ class UserGameAnswerSerializer(serializers.Serializer):
         answers_questions_ids = [answer["id"] for answer in answers]
         questions_left = models.Question.objects.exclude(id__in=answers_questions_ids).values('id')
 
-        # TODO change to the level of probabilities
+        # TODO change to the level of probabilities or some Constant variable depending from probability
         if len(questions_left) == 0:
             # TODO save game data to check, that we already finish the game
             result = sorted(probabilities, key=lambda p: p["probability"], reverse=True)[0]
+            game_object.predicted_character = models.Character.objects.get(id=result['id'])
+            game_object.save(update_fields=['predicted_character'])
             print(f"You got winner. This is your guess {result}")
             result['is_finished'] = True
             return result

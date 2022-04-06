@@ -36,7 +36,8 @@ function saveNewCharacterHandler(data) {
 
 }
 
-function saveCharacterHandler() {
+function saveCharacterHandler(event) {
+    event.preventDefault()
     if (saveCharacterInputContainer.value == null || saveCharacterInputContainer.value === "") {
         alert("Вы должны ввести имя вашего персонажа")
         return
@@ -61,5 +62,4 @@ function noAnswerHandler() {
     hideObject(characterPredictedYesAnswerContainer)
     hideObject(characterPredictedNoAnswerContainer)
     hideObject(characterPredictedContainer)
-    saveCharacterButtonContainer.addEventListener('click', saveCharacterHandler)
 }
