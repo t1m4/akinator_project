@@ -4,7 +4,7 @@
 let gameIdName = 'gameId'
 let gameName = 'game'
 let currentQuestionName = 'currentQuestion'
-let currentQuestionIdName = 'currentQuestionId'
+let predictedCharacterIdName = 'predictedCharacterId'
 
 let game_data = {
     "answers": [],
@@ -27,6 +27,6 @@ let characterPredictedAddButtonsContainer = document.querySelector('.user-predic
 let saveCharacterButtonContainer = document.querySelector('.save-user-character-button')
 let saveCharacterInputContainer = document.querySelector('.user-character-name-input')
 
-characterPredictedYesAnswerContainer.addEventListener("click", () => yesAnswerHandler());
-characterPredictedNoAnswerContainer.addEventListener("click", () => noAnswerHandler());
+characterPredictedYesAnswerContainer.addEventListener("change", () => yesAnswerHandler());
+characterPredictedNoAnswerContainer.addEventListener("change", () => noAnswerHandler());
 

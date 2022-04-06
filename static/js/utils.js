@@ -71,7 +71,6 @@ function setImageMeta(url, callback = setImageMetaCallback) {
 function clearRadioButtons() {
     var radioButtonArray = document.getElementsByName('radio');
 
-    console.log("arrag", radioButtonArray)
     for (var i = 0; i < radioButtonArray.length; i++) {
         var radioButton = radioButtonArray[i];
         radioButton.checked = false;
@@ -82,4 +81,9 @@ function clearLocalStorage(){
     localStorage.removeItem(gameIdName)
     localStorage.removeItem(gameName)
     localStorage.removeItem(currentQuestionName)
+    localStorage.removeItem(predictedCharacterIdName)
+}
+
+function clearInput(){
+    saveCharacterInputContainer.value = ""
 }

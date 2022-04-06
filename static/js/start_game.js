@@ -14,11 +14,16 @@ function startGame() {
     hideObject(characterPredictedYesAnswerContainer)
     hideObject(characterPredictedNoAnswerContainer)
     hideObject(characterPredictedContainer)
-    // hideObject(startGameButton
     let gameId = localStorage.getItem(gameIdName)
     if (!isNullVariable(gameId)) {
         showObject(answerContainer)
-        showFirstQuestion()
+        let question = JSON.parse(localStorage.getItem(currentQuestionName))
+        let questionHeader = document.querySelector('.question-text');
+        if (!isNullVariable(question)) {
+            questionHeader.textContent = "Question: " + question['name']
+        } else {
+            clearLocalStorage()
+        }
         console.log('Continue the old game!!!')
     } else {
         showObject(answerContainer)
@@ -29,10 +34,8 @@ function startGame() {
 
 
 function main() {
-    let nextQuestionButton = document.querySelector('.next-question');
     let nextQuestionForm = document.querySelector('.question-form');
     startGameContainer.addEventListener("click", () => startGame());
-    // nextQuestionButton.addEventListener("click", () => nextQuestionEventListener());
     nextQuestionForm.addEventListener("submit", (e) => nextQuestionEventListener(e));
 }
 

@@ -22,18 +22,15 @@
     <br>
 
     <div class="answer-container" style="visibility:hidden">
-        <!--<h1 class="question-text" style="visibility:hidden">Question: {{ question_text }}</h1>-->
         <h1 class="question-text">Question: {{ question_text }}</h1>
-        <!--<form class="question-form" style="visibility:hidden">-->
         <form class="question-form">
-            <!--    <input type="hidden" name="question" value="{{ question }}"/>-->
-            <label class="checkbox-label"><input type="radio" name="answer" value="1" required/> Yes</label><br/>
-            <label class="checkbox-label"><input type="radio" name="answer" value="0" required/> No</label><br/>
-            <label class="checkbox-label"><input type="radio" name="answer" value="0.5" required/> Don't
+            <label class="checkbox-label"><input type="radio" name="radio" value="1" required/> Yes</label><br/>
+            <label class="checkbox-label"><input type="radio" name="radio" value="0" required/> No</label><br/>
+            <label class="checkbox-label"><input type="radio" name="radio" value="0.5" required/> Don't
                 know</label><br/>
-            <label class="checkbox-label"><input type="radio" name="answer" value="0.75" required/>
+            <label class="checkbox-label"><input type="radio" name="radio" value="0.75" required/>
                 Probably</label><br/>
-            <label class="checkbox-label"><input type="radio" name="answer" value="0.25" required/> Probably Not</label><br/>
+            <label class="checkbox-label"><input type="radio" name="radio" value="0.25" required/> Probably Not</label><br/>
             <br/>
             <button type="submit" class="btn btn-primary next-question">
                 Next question
@@ -42,7 +39,6 @@
         </form>
     </div>
 
-    <!--    <div class="user-finish-answer-container" >-->
     <div class="user-finish-answer-container" style="visibility:hidden">
         <h3 class="user-predicted-character-name">Hello sdlfkj</h3>
         <ul>
@@ -51,33 +47,27 @@
                 <label for='radio_yes'>Да, совпадает</label>
             </li>
             <li class="user-predicted-no">
-                <input type='radio' value='0' name='radio' id='radio_no' />
+                <input type='radio' value='0' name='radio' id='radio_no'/>
                 <label for='radio_no'>Нет не совпадает, ввести своего:)</label>
             </li>
 
             <div class="user-predicted-no-add-buttons" style="visibility:hidden">
                 <li>
                     <label>
-                        <input type='text' value='1' name='user_character_name' class="user-character-name-input"/>
+                        <input type='text' name='user_character_name' class="user-character-name-input" required/>
                     </label><br>
                 </li>
-                <button type="submit" class="btn btn-primary save-user-character-button" >
+                <button type="submit" class="btn btn-primary save-user-character-button">
                     Сохранить моего пользователя
                 </button>
 
             </div>
-            <div class="character-image " >
+            <div class="character-image ">
                 <image></image>
             </div>
 
         </ul>
     </div>
-
-    <br>
-    <br>
-    <!--<div class="character-image " style="visibility:hidden">-->
-
-
 </div>
 
 
