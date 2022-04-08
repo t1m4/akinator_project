@@ -59,7 +59,6 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = "akinator_platform.urls"
 
-print(BASE_DIR + 'templates')
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
@@ -149,3 +148,14 @@ REST_FRAMEWORK = {
     # "PAGE_SIZE": 1000,
     "PAGE_SIZE": 1000,
 }
+
+# Redis
+REDIS_HOST = os.environ.get('REDIS_HOST', 'localhost')
+REDIS_PORT = os.environ.get('REDIS_PORT', 6379)
+REDIS_BASE = os.environ.get('REDIS_DB', 4)
+
+REDIS_URL = f'redis://{REDIS_HOST}:{REDIS_PORT}/{REDIS_BASE}'
+
+
+# Celery
+CELERY_BROKER_URL = CELERY_RESULT_BACKEND = REDIS_URL

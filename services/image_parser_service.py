@@ -1,8 +1,9 @@
+import logging
 import os
-import time
 
 from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException, TimeoutException
+from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions
@@ -10,13 +11,15 @@ from selenium.webdriver.support.wait import WebDriverWait
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
+logger = logging.getLogger(__name__)
+
 
 def handle_certain_exceptions(func):
     def wraps(self, *args, **kwargs):
         try:
             return func(self, *args, **kwargs)
         except (NoSuchElementException, TimeoutException) as e:
-            print(e)
+            logger.error(e)
             return
 
     return wraps
@@ -24,19 +27,19 @@ def handle_certain_exceptions(func):
 
 class WebDriver():
     def __init__(self):
+        chrome_options = Options()
+        chrome_options.add_argument("--headless")
         executable_path = BASE_DIR + "/../chromedriver_93"
-        self.driver = webdriver.Chrome(executable_path=executable_path)
+        self.driver = webdriver.Chrome(executable_path=executable_path, options=chrome_options)
 
     def find(self, search_name):
         image_url = self.get_search_page(search_name)
-        print(image_url)
         return image_url
 
     @handle_certain_exceptions
     def get_search_page(self, search_name):
         self.driver.get(
             "https://ru.wikipedia.org/wiki/%D0%97%D0%B0%D0%B3%D0%BB%D0%B0%D0%B2%D0%BD%D0%B0%D1%8F_%D1%81%D1%82%D1%80%D0%B0%D0%BD%D0%B8%D1%86%D0%B0")
-        # "https://www.google.com/")
         register_button = self.driver.find_element(by=By.CLASS_NAME, value="vector-search-box-input")
         if not register_button:
             return
@@ -48,41 +51,35 @@ class WebDriver():
         register_button.send_keys(Keys.DOWN)
         register_button.send_keys(Keys.ENTER)
 
-        print('after search')
         try:
             return self.get_photo_from_page()
         except NoSuchElementException:
             pass
             return self.get_from_search_results()
-        # return main_photo.get_attribute('src')
 
     def get_photo_from_page(self):
         first_headline = self.driver.find_element(by=By.CLASS_NAME, value='mw-first-heading')
         main_photo_container = self.driver.find_element(by=By.CLASS_NAME, value='infobox-image')
-        print(main_photo_container)
         main_photo = main_photo_container.find_element(by=By.TAG_NAME, value='img')
-        print(main_photo)
         return main_photo.get_attribute('src')
 
     def get_from_search_results(self):
         search_results = self.driver.find_elements(by=By.CLASS_NAME, value='mw-search-result-heading')
-        self.results_urls = []
+        results_urls = []
         for search_result in search_results:
             search_result_link = search_result.find_element(by=By.TAG_NAME, value='a')
             search_result_url = search_result_link.get_attribute('href')
-            print(search_result_url)
             if search_result_url:
-                self.results_urls.append((search_result_url))
-            #     self.driver.get(search_result_url)
-            # search_result_link.click()
-            # print(self.get_photo_from_page())
-        # return self.get_photo_from_page()
+                results_urls.append(search_result_url)
 
-        for result_url in self.results_urls:
+        for result_url in results_urls:
             self.driver.get(result_url)
-            photo_url = self.get_photo_from_page()
-            if photo_url:
-                return photo_url
+            try:
+                photo_url = self.get_photo_from_page()
+                if photo_url:
+                    return photo_url
+            except NoSuchElementException:
+                continue
 
 
 if __name__ == "__main__":

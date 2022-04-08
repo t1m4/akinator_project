@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from akinator_api import models, services
+from akinator_api import models, services, tasks
 from akinator_api.constants import ANSWER_CHOICES
 from services import probability_service, image_parser_service
 
@@ -19,13 +19,10 @@ class CharacterSerializer(serializers.ModelSerializer):
         read_only_fields = ("image_url",)
 
     def create(self, validated_data):
-        print(validated_data)
+        instance = super().create(validated_data)
         if not validated_data.get('image_url'):
-            driver_service = image_parser_service.WebDriver()
-            image_url = driver_service.find(validated_data['name'])
-            if image_url:
-                validated_data['image_url'] = image_url
-        return super().create(validated_data)
+            tasks.parse_image_url.delay(instance.id)
+        return instance
 
 
 class QuestionSerializer(serializers.ModelSerializer):

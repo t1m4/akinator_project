@@ -13,7 +13,7 @@ class QuestionAdmin(admin.ModelAdmin):
 
 
 class UserGameAdmin(admin.ModelAdmin):
-    list_display = ["id", "answers"]
+    list_display = ["id", "answers", "predicted_character", "is_success_predicted", "is_finished", "user_answer", "user_character_id"]
 
 
 admin.site.register(models.Character, CharacterAdmin)
