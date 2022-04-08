@@ -81,5 +81,4 @@ class UserGameViewSet(
         )
         serializer.is_valid(raise_exception=True)
         response_data = serializer.create(serializer.validated_data)
-        print("response_data", response_data)
         return Response(response_data)
