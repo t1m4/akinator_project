@@ -42,7 +42,6 @@ INSTALLED_APPS += [
     "bootstrap4"
 ]
 INSTALLED_APPS += [
-    "akinator",
     "akinator_api",
 ]
 
