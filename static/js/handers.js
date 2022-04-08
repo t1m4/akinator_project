@@ -8,6 +8,7 @@ function yesAnswerHandler() {
     hideObject(characterPredictedNoAnswerContainer)
     hideObject(characterPredictedContainer)
     showObject(startGameContainer)
+    showObject(continueGameContainer)
 
     new_game_data = JSON.parse(localStorage.getItem(gameName))
     new_game_data['is_success_predicted'] = true
@@ -46,6 +47,7 @@ function saveCharacterHandler(event) {
     hideObject(characterPredictedAddButtonsContainer)
     hideObject(userFinishAnswerContainer)
     showObject(startGameContainer)
+    showObject(continueGameContainer)
 
     new_user_data = {
         'name': saveCharacterInputContainer.value,

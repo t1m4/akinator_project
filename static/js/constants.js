@@ -17,6 +17,7 @@ let game_data = {
 }
 
 let startGameContainer = document.querySelector('.start-game')
+let continueGameContainer = document.querySelector('.continue-game')
 let answerContainer = document.querySelector('.answer-container')
 let userFinishAnswerContainer = document.querySelector('.user-finish-answer-container')
 let characterImageContainer = document.querySelector('.character-image')
