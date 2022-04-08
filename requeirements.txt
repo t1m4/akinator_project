@@ -9,3 +9,4 @@ numpy==1.22.3
 drf-extensions==0.7.1
 requests==2.27.1
 django-bootstrap4==22.1
+selenium==4.1.2
