@@ -11,7 +11,8 @@ from akinator_api import models, serializers
 
 class IndexView(APIView):
     def get(self, request):
-        return render(request, 'akinator_api/index.html')
+        return render(request, "akinator_api/index.html")
+
 
 class CharacterView(
     mixins.CreateModelMixin,

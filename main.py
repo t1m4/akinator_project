@@ -126,11 +126,13 @@ def ready_akinator():
     aki.win()
 
     correct = input(
-        f"It's {aki.first_guess['name']} ({aki.first_guess['description']})! Was I correct?\n{aki.first_guess['absolute_picture_path']}\n\t")
+        f"It's {aki.first_guess['name']} ({aki.first_guess['description']})! Was I correct?\n{aki.first_guess['absolute_picture_path']}\n\t"
+    )
     if correct.lower() == "yes" or correct.lower() == "y":
         print("Yay\n")
     else:
         print("Oof\n")
+
 
 if __name__ == "__main__":
     # question = random.choice(questions)
@@ -150,11 +152,11 @@ if __name__ == "__main__":
     #     # print('seocnd questin', next_question)
 
     n = 5
-    a = [[0]*n]*n
+    a = [[0] * n] * n
     for i in range(n):
         for j in range(n):
             # a[i][j] = (random.randint(1, 10) + i) + j
-            a[i][j] = (i + j)
+            a[i][j] = i + j
     pprint(a)
 
     k = a[0][0]
@@ -162,7 +164,7 @@ if __name__ == "__main__":
     for i in range(n):
         # for j in range(n-i):
         for j in range(n - i):
-            print(i, j , a[i][j])
+            print(i, j, a[i][j])
             # if i == j and j<n-1 and a[i][j+1] > k:
             #     k = a[i][j+1]
             #     result.append({

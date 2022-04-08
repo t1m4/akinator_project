@@ -11,4 +11,4 @@ def parse_image_url(character_id: int):
     image_url = driver_service.find(character.name)
     if image_url:
         character.image_url = image_url
-        character.save(update_fields=['image_url'])
+        character.save(update_fields=["image_url"])

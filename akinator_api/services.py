@@ -24,9 +24,9 @@ def get_list_index_or_error(current_list, value):
 
 
 def add_new_answers_to_object(new_answers: list, parent_object):
-    parent_object_answers_id = [answer['id'] for answer in parent_object.answers]
+    parent_object_answers_id = [answer["id"] for answer in parent_object.answers]
     for new_answer in new_answers:
-        if new_answer['id'] in parent_object_answers_id:
+        if new_answer["id"] in parent_object_answers_id:
             continue
         get_object_or_error(models.Question, new_answer["id"])
         parent_object.answers.append(new_answer)
