@@ -1,10 +1,17 @@
 # Create your views here.
+from django.shortcuts import render
 from rest_framework import mixins
 from rest_framework.decorators import action
 from rest_framework.response import Response
+from rest_framework.views import APIView
 from rest_framework.viewsets import GenericViewSet
 
 from akinator_api import models, serializers
+
+
+class IndexView(APIView):
+    def get(self, request):
+        return render(request, "akinator_api/index.html")
 
 
 class CharacterView(

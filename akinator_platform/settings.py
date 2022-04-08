@@ -37,10 +37,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
 ]
 
-INSTALLED_APPS += [
-    "rest_framework",
-    "bootstrap4"
-]
+INSTALLED_APPS += ["rest_framework", "bootstrap4"]
 INSTALLED_APPS += [
     "akinator_api",
 ]
@@ -61,7 +58,7 @@ ROOT_URLCONF = "akinator_platform.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [ BASE_DIR + '/templates'],
+        "DIRS": [BASE_DIR + "/templates"],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -133,10 +130,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
-STATIC_URL = '/static/'
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, "static"),
-)
+STATIC_URL = "/static/"
+STATICFILES_DIRS = (os.path.join(BASE_DIR, "static"),)
 
 REST_FRAMEWORK = {
     # 'DEFAULT_RENDERER_CLASSES': ('rest_framework.renderers.JSONRenderer', 'rest_framework.renderers.BrowsableAPIRenderer',),
@@ -149,11 +144,11 @@ REST_FRAMEWORK = {
 }
 
 # Redis
-REDIS_HOST = os.environ.get('REDIS_HOST', 'localhost')
-REDIS_PORT = os.environ.get('REDIS_PORT', 6379)
-REDIS_BASE = os.environ.get('REDIS_DB', 4)
+REDIS_HOST = os.environ.get("REDIS_HOST", "localhost")
+REDIS_PORT = os.environ.get("REDIS_PORT", 6379)
+REDIS_BASE = os.environ.get("REDIS_DB", 4)
 
-REDIS_URL = f'redis://{REDIS_HOST}:{REDIS_PORT}/{REDIS_BASE}'
+REDIS_URL = f"redis://{REDIS_HOST}:{REDIS_PORT}/{REDIS_BASE}"
 
 
 # Celery

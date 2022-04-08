@@ -20,3 +20,11 @@ Reinforce characters answers if Akinator got it right
 Allow users to add new questions
 Use a database instead of in-memory to be able to add new characters and questions indefinitely
 Instead of randomly choosing questions, select the ones that could untie the top guesses
+
+
+1. Collection database 
+2. Add answer for characters 
+3. Translate to english
+4. Change probability to some constant and show only after this probability is more. 
+5. Add changing answer for question. 
+6. Change generating next quetion. Not use randomly use smart things

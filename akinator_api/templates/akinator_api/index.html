@@ -1,0 +1,83 @@
+{% extends  "base.html" %}
+{% load bootstrap4 %}
+{% load static %}
+
+{% block content %}
+{% if characters_count %}
+<h1>Total number of characters {{characters_count}}</h1>
+{% endif %}
+{% endblock %}
+
+
+{% block body %}
+<div style=" text-align: center">
+    <button type="link" class="btn btn-primary text-center start-game" style="visibility:visible">
+        Начать новую игру!!!
+    </button>
+
+<!--    <button type="link" class="btn btn-primary text-center continue-game" style="visibility:hidden">-->
+    <button type="link" class="btn btn-primary text-center continue-game" style="visibility:visible">
+        Продолжить игру!!!
+    </button>
+
+    <br>
+    <br>
+
+    <div class="answer-container" style="visibility:hidden">
+        <h1 class="question-text">Ответьте на вопрос: {{ question_text }}</h1>
+        <form class="question-form">
+            <label class="checkbox-label"><input type="radio" name="radio" value="1" required/> Да</label><br/>
+            <label class="checkbox-label"><input type="radio" name="radio" value="0" required/> Нет</label><br/>
+            <label class="checkbox-label"><input type="radio" name="radio" value="0.5" required/> Не знаю</label><br/>
+            <label class="checkbox-label"><input type="radio" name="radio" value="0.75" required/>Возможно</label><br/>
+            <label class="checkbox-label"><input type="radio" name="radio" value="0.25" required/> Возможно
+                нет</label><br/>
+            <br/>
+            <button type="submit" class="btn btn-primary next-question">
+                Следующий вопрос
+            </button>
+
+        </form>
+    </div>
+
+    <div class="user-finish-answer-container" style="visibility:hidden">
+        <h3 class="user-predicted-character-name"></h3>
+        <ul>
+            <li class="user-predicted-yes">
+                <input type='radio' value='1' name='radio' id='radio_yes'/>
+                <label for='radio_yes'>Да, совпадает</label>
+            </li>
+            <li class="user-predicted-no">
+                <input type='radio' value='0' name='radio' id='radio_no'/>
+                <label for='radio_no'>Нет не совпадает, ввести своего:)</label>
+            </li>
+
+            <form action="" class="user-predicted-no-add-buttons" style="visibility:hidden">
+                <label for="username">Введите имя:</label>
+                <input type="text" id="username" name="username" class="user-character-name-input" required>
+                <input type="submit" value="Сохранить моего пользователя" class="save-user-character-button">
+            </form>
+
+            <div class="character-image ">
+                <image></image>
+            </div>
+
+        </ul>
+    </div>
+    <!--    <form action="">-->
+    <!--  <label for="username">Username:</label>-->
+    <!--  <input type="text" id="username" name="username" required>-->
+    <!--  <input type="submit">-->
+    <!--</form>-->
+</div>
+
+
+{% endblock %}
+
+{% block scripts %}
+<script type="text/javascript" src="{% static 'js/handers.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/constants.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/utils.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/start_game.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/game.js' %}"></script>
+{% endblock %}
