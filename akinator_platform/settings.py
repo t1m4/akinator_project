@@ -161,5 +161,5 @@ ADMIN_PASSWORD = os.environ.get("ADMIN_PASSWORD")
 
 django_heroku.settings(locals())
 
-STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATIC_ROOT = BASE_DIR + 'staticfiles'
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
