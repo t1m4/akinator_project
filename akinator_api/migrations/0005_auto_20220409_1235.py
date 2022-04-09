@@ -7,18 +7,22 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('akinator_api', '0004_usergame_probabilities'),
+        ("akinator_api", "0004_usergame_probabilities"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='character',
-            name='questions_ids',
-            field=django.contrib.postgres.fields.jsonb.JSONField(blank=True, default=list, null=True),
+            model_name="character",
+            name="questions_ids",
+            field=django.contrib.postgres.fields.jsonb.JSONField(
+                blank=True, default=list, null=True
+            ),
         ),
         migrations.AddField(
-            model_name='usergame',
-            name='questions_ids',
-            field=django.contrib.postgres.fields.jsonb.JSONField(blank=True, default=list, null=True),
+            model_name="usergame",
+            name="questions_ids",
+            field=django.contrib.postgres.fields.jsonb.JSONField(
+                blank=True, default=list, null=True
+            ),
         ),
     ]

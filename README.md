@@ -30,5 +30,5 @@ Instead of randomly choosing questions, select the ones that could untie the top
 6. Change generating next question. Not use randomly use smart things
 7. Change button for answers and questions for new user. Ask questions from fix guess character.  
 8. **Добавить все в docker-compose and heroku**
-9. Add sentry for logging
+9. **Add sentry for logging**
 10. **Add command to create superuser with password ruslan and ruslan** 

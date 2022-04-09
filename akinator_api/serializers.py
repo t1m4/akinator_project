@@ -22,10 +22,10 @@ class CharacterSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         instance = super().create(validated_data)
-        if not validated_data.get('questions_ids'):
-            answers = validated_data.get('answers')
-            instance.questions_ids = [answer['id'] for answer in answers]
-            instance.save(update_fields=['questions_ids'])
+        if not validated_data.get("questions_ids"):
+            answers = validated_data.get("answers")
+            instance.questions_ids = [answer["id"] for answer in answers]
+            instance.save(update_fields=["questions_ids"])
 
         if not validated_data.get("image_url"):
             tasks.parse_image_url.delay(instance.id)
@@ -60,7 +60,7 @@ class UserGameSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.UserGame
         read_only_fields = ("predicted_character", "probabilities")
-        exclude = ('questions_ids',)
+        exclude = ("questions_ids",)
         # exclude = ('probabilities', 'questions_ids')
 
 
@@ -81,13 +81,13 @@ class UserGameAnswerSerializer(serializers.Serializer):
         ).values("id", "name")
 
         length_of_answers = len(game_object.answers)
-        result = sorted(
-            probabilities, key=lambda p: p["probability"], reverse=True
-        )[0]
+        result = sorted(probabilities, key=lambda p: p["probability"], reverse=True)[0]
         if (
-                len(questions_left) == 0 or
-                length_of_answers > 2 and result['probability'] > 0.9 or
-                length_of_answers > 5 and result['probability'] > 0.8
+            len(questions_left) == 0
+            or length_of_answers > 2
+            and result["probability"] > 0.9
+            or length_of_answers > 5
+            and result["probability"] > 0.8
         ):
             # result = sorted(
             #     probabilities, key=lambda p: p["probability"], reverse=True
@@ -102,24 +102,34 @@ class UserGameAnswerSerializer(serializers.Serializer):
         else:
             next_question = None
             if length_of_answers > 10:
-                next_question_id = self._find_the_most_probable_question(probabilities, answers_questions_ids)
+                next_question_id = self._find_the_most_probable_question(
+                    probabilities, answers_questions_ids
+                )
                 if next_question_id:
-                    next_question = questions_left.filter(id=next_question_id).values('id', 'name').first()
+                    next_question = (
+                        questions_left.filter(id=next_question_id)
+                        .values("id", "name")
+                        .first()
+                    )
             if not next_question:
                 # next_question = random.choice(questions_left)
-                next_question = questions_left.order_by("id").values("id", "name").first()
+                next_question = (
+                    questions_left.order_by("id").values("id", "name").first()
+                )
             return next_question
 
     @staticmethod
     def _find_the_most_probable_question(probabilities, answers_questions_ids):
         """
-            TODO May me it's not a good idea to to so. But it's useful after many question. For examples, after 10 questions.
-                We take most probable character, and ask his questions.
+        TODO May me it's not a good idea to to so. But it's useful after many question. For examples, after 10 questions.
+            We take most probable character, and ask his questions.
         """
         character_id_with_most_probability = sorted(
             probabilities, key=lambda p: p["probability"], reverse=True
-        )[0]['id']
-        character_with_most_probability = models.Character.objects.get(id=character_id_with_most_probability)
+        )[0]["id"]
+        character_with_most_probability = models.Character.objects.get(
+            id=character_id_with_most_probability
+        )
         for character_question_id in character_with_most_probability.questions_ids:
             if character_question_id not in answers_questions_ids:
                 return character_question_id

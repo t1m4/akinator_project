@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('akinator_api', '0005_auto_20220409_1235'),
+        ("akinator_api", "0005_auto_20220409_1235"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='character',
-            name='image_url',
+            model_name="character",
+            name="image_url",
             field=models.URLField(blank=True, null=True),
         ),
     ]

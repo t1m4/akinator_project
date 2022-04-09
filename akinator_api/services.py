@@ -30,7 +30,7 @@ def add_new_answers_to_object(new_answers: list, parent_object):
             continue
         get_object_or_error(models.Question, new_answer["id"])
         parent_object.answers.append(new_answer)
-        parent_object.questions_ids.append(new_answer['id'])
+        parent_object.questions_ids.append(new_answer["id"])
     parent_object.save(update_fields=["answers", "questions_ids"])
     return parent_object.answers
 
