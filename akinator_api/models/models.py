@@ -9,8 +9,7 @@ class Character(ModelWithCreateAndUpdateDates):
     name = models.CharField(max_length=256)
     answers = JSONField()
     questions_ids = JSONField(blank=True, null=True, default=list)
-    # TODO make this fields black True and null True
-    image_url = models.URLField()
+    image_url = models.URLField(blank=True, null=True)
 
 
 class Question(ModelWithCreateAndUpdateDates):
