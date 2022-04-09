@@ -151,10 +151,10 @@ REDIS_PORT = os.environ.get("REDIS_PORT", 6379)
 REDIS_PASSWORD = os.environ.get("REDIS_PASSWORD", '')
 REDIS_BASE = os.environ.get("REDIS_DB", 4)
 
-REDIS_URL = f"rediss://:{REDIS_PASSWORD}@{REDIS_HOST}:{REDIS_PORT}"
-print(REDIS_URL)
+# REDIS_URL = f"rediss://:{REDIS_PASSWORD}@{REDIS_HOST}:{REDIS_PORT}"
+# print(REDIS_URL)
 # REDIS_URL = "rediss://:pc17189a7e143b9f87d601bf23f30babeb0d001b4ec308ca6a8069014e7c61eea@ec2-54-171-215-84.eu-west-1.compute.amazonaws.com:18460"
-# REDIS_URL = "redis://:pc17189a7e143b9f87d601bf23f30babeb0d001b4ec308ca6a8069014e7c61eea@ec2-54-171-215-84.eu-west-1.compute.amazonaws.com:18459"
+REDIS_URL = "redis://:pc17189a7e143b9f87d601bf23f30babeb0d001b4ec308ca6a8069014e7c61eea@ec2-54-171-215-84.eu-west-1.compute.amazonaws.com:18459"
 
 # Celery
 CELERY_BROKER_URL = CELERY_RESULT_BACKEND = REDIS_URL
