@@ -13,6 +13,8 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+import django_heroku
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # Quick-start development settings - unsuitable for production
@@ -42,9 +44,9 @@ INSTALLED_APPS += [
     "akinator_api",
 ]
 
-
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -146,15 +148,20 @@ REST_FRAMEWORK = {
 # Redis
 REDIS_HOST = os.environ.get("REDIS_HOST", "localhost")
 REDIS_PORT = os.environ.get("REDIS_PORT", 6379)
+REDIS_PASSWORD = os.environ.get("REDIS_PASSWORD", '')
 REDIS_BASE = os.environ.get("REDIS_DB", 4)
 
-REDIS_URL = f"redis://{REDIS_HOST}:{REDIS_PORT}/{REDIS_BASE}"
-
+REDIS_URL = f"redis://:{REDIS_PASSWORD}@{REDIS_HOST}:{REDIS_PORT}"
+# REDIS_URL = "redis://:pc17189a7e143b9f87d601bf23f30babeb0d001b4ec308ca6a8069014e7c61eea@ec2-54-171-215-84.eu-west-1.compute.amazonaws.com:18459"
 
 # Celery
 CELERY_BROKER_URL = CELERY_RESULT_BACKEND = REDIS_URL
 
-
 ADMIN_USERNAME = os.environ.get("ADMIN_USERNAME")
 ADMIN_EMAIL = os.environ.get("ADMIN_EMAIL", )
 ADMIN_PASSWORD = os.environ.get("ADMIN_PASSWORD")
+
+django_heroku.settings(locals())
+
+STATIC_ROOT = BASE_DIR + '/staticfiles'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'

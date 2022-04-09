@@ -13,4 +13,3 @@ class Command(BaseCommand):
             return
 
         print('user already exists - {}'.format(user))
-        user.delete()
