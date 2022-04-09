@@ -148,9 +148,11 @@ REST_FRAMEWORK = {
 # Redis
 REDIS_HOST = os.environ.get("REDIS_HOST", "localhost")
 REDIS_PORT = os.environ.get("REDIS_PORT", 6379)
+REDIS_PASSWORD = os.environ.get("REDIS_PASSWORD", '')
 REDIS_BASE = os.environ.get("REDIS_DB", 4)
 
-REDIS_URL = f"redis://{REDIS_HOST}:{REDIS_PORT}/{REDIS_BASE}"
+REDIS_URL = f"redis://:{REDIS_PASSWORD}@{REDIS_HOST}:{REDIS_PORT}"
+print(REDIS_URL)
 
 # Celery
 CELERY_BROKER_URL = CELERY_RESULT_BACKEND = REDIS_URL
