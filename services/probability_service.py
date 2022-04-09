@@ -84,5 +84,4 @@ class ProbabilityService(object):
             "character_total_probability": character_total_probability,
             "exclude_character_total_probability": exclude_character_total_probability,
         }
-        print("Frommyprofile", self.user_game.probabilities)
         self.user_game.save(update_fields=["probabilities"])
