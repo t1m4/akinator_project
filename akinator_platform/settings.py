@@ -172,6 +172,8 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Sentry
 
+ENVIRONMENT = os.environ.get("ENVIRONMENT", 'local')
+
 sentry_sdk.init(
     dsn="https://d4f57814a1c04460a60dedbd7175b22b@o1196583.ingest.sentry.io/6319601",
     integrations=[DjangoIntegration(), CeleryIntegration()],
@@ -180,7 +182,7 @@ sentry_sdk.init(
     # of transactions for performance monitoring.
     # We recommend adjusting this value in production.
     traces_sample_rate=1.0,
-
+    environment=ENVIRONMENT,
     # If you wish to associate users to errors (assuming you are using
     # django.contrib.auth) you may enable sending PII data.
     send_default_pii=True
