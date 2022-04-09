@@ -5,7 +5,7 @@ from akinator_api import models
 
 
 class CharacterAdmin(admin.ModelAdmin):
-    list_display = ["id", "name", "image_url", "answers"]
+    list_display = ["id", "name", "image_url", "answers", "questions_ids"]
 
 
 class QuestionAdmin(admin.ModelAdmin):
@@ -16,6 +16,7 @@ class UserGameAdmin(admin.ModelAdmin):
     list_display = [
         "id",
         "answers",
+        "questions_ids",
         "predicted_character",
         "is_success_predicted",
         "is_finished",

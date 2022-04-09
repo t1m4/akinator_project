@@ -1,3 +1,5 @@
+import random
+
 from rest_framework import serializers
 
 from akinator_api import models, services, tasks
@@ -20,6 +22,11 @@ class CharacterSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         instance = super().create(validated_data)
+        if not validated_data.get('questions_ids'):
+            answers = validated_data.get('answers')
+            instance.questions_ids = [answer['id'] for answer in answers]
+            instance.save(update_fields=['questions_ids'])
+
         if not validated_data.get("image_url"):
             tasks.parse_image_url.delay(instance.id)
         return instance
@@ -52,9 +59,9 @@ class UserGameSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.UserGame
-        fields = "__all__"
         read_only_fields = ("predicted_character", "probabilities")
-        # exclude = ('probabilities',)
+        exclude = ('questions_ids',)
+        # exclude = ('probabilities', 'questions_ids')
 
 
 class UserGameAnswerSerializer(serializers.Serializer):
@@ -67,30 +74,52 @@ class UserGameAnswerSerializer(serializers.Serializer):
 
         service_object = probability_service.ProbabilityService(game_object)
         probabilities = service_object.calculate_probabilities()
-        print("probabilities", probabilities)
 
-        # TODO here we return new answers for user
         answers_questions_ids = [answer["id"] for answer in answers]
         questions_left = models.Question.objects.exclude(
             id__in=answers_questions_ids
-        ).values("id")
+        ).values("id", "name")
 
-        # TODO change to the level of probabilities or some Constant variable depending from probability
-        if len(questions_left) == 0:
-            # TODO save game data to check, that we already finish the game
-            result = sorted(
-                probabilities, key=lambda p: p["probability"], reverse=True
-            )[0]
+        length_of_answers = len(game_object.answers)
+        result = sorted(
+            probabilities, key=lambda p: p["probability"], reverse=True
+        )[0]
+        if (
+                len(questions_left) == 0 or
+                length_of_answers > 2 and result['probability'] > 0.9 or
+                length_of_answers > 5 and result['probability'] > 0.8
+        ):
+            # result = sorted(
+            #     probabilities, key=lambda p: p["probability"], reverse=True
+            # )[0]
             game_object.predicted_character = models.Character.objects.get(
                 id=result["id"]
             )
             game_object.save(update_fields=["predicted_character"])
-            print(f"You got winner. This is your guess {result}")
+            # print(f"You got winner. This is your guess {result}")
             result["is_finished"] = True
             return result
         else:
-            # TODO choose next question using more efficient algorithm
-            # next_question = random.choice(questions_left)
-            next_question = questions_left.order_by("id").values("id", "name").first()
-            print("left question", questions_left)
+            next_question = None
+            if length_of_answers > 10:
+                next_question_id = self._find_the_most_probable_question(probabilities, answers_questions_ids)
+                if next_question_id:
+                    next_question = questions_left.filter(id=next_question_id).values('id', 'name').first()
+            if not next_question:
+                # next_question = random.choice(questions_left)
+                next_question = questions_left.order_by("id").values("id", "name").first()
             return next_question
+
+    @staticmethod
+    def _find_the_most_probable_question(probabilities, answers_questions_ids):
+        """
+            TODO May me it's not a good idea to to so. But it's useful after many question. For examples, after 10 questions.
+                We take most probable character, and ask his questions.
+        """
+        character_id_with_most_probability = sorted(
+            probabilities, key=lambda p: p["probability"], reverse=True
+        )[0]['id']
+        character_with_most_probability = models.Character.objects.get(id=character_id_with_most_probability)
+        for character_question_id in character_with_most_probability.questions_ids:
+            if character_question_id not in answers_questions_ids:
+                return character_question_id
