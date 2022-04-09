@@ -50,7 +50,7 @@ INSTALLED_APPS += [
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
-    'whitenoise.middleware.WhiteNoiseMiddleware',
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -152,7 +152,7 @@ REST_FRAMEWORK = {
 # Redis
 REDIS_HOST = os.environ.get("REDIS_HOST", "localhost")
 REDIS_PORT = os.environ.get("REDIS_PORT", 6379)
-REDIS_PASSWORD = os.environ.get("REDIS_PASSWORD", '')
+REDIS_PASSWORD = os.environ.get("REDIS_PASSWORD", "")
 REDIS_BASE = os.environ.get("REDIS_DB", 4)
 
 REDIS_URL = f"redis://:{REDIS_PASSWORD}@{REDIS_HOST}:{REDIS_PORT}"
@@ -162,26 +162,29 @@ REDIS_URL = f"redis://:{REDIS_PASSWORD}@{REDIS_HOST}:{REDIS_PORT}"
 CELERY_BROKER_URL = CELERY_RESULT_BACKEND = REDIS_URL
 
 ADMIN_USERNAME = os.environ.get("ADMIN_USERNAME")
-ADMIN_EMAIL = os.environ.get("ADMIN_EMAIL", )
+ADMIN_EMAIL = os.environ.get(
+    "ADMIN_EMAIL",
+)
 ADMIN_PASSWORD = os.environ.get("ADMIN_PASSWORD")
 
 django_heroku.settings(locals())
 
-STATIC_ROOT = BASE_DIR + '/staticfiles'
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STATIC_ROOT = BASE_DIR + "/staticfiles"
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 # Sentry
+
+ENVIRONMENT = os.environ.get("ENVIRONMENT", "local")
 
 sentry_sdk.init(
     dsn="https://d4f57814a1c04460a60dedbd7175b22b@o1196583.ingest.sentry.io/6319601",
     integrations=[DjangoIntegration(), CeleryIntegration()],
-
     # Set traces_sample_rate to 1.0 to capture 100%
     # of transactions for performance monitoring.
     # We recommend adjusting this value in production.
     traces_sample_rate=1.0,
-
+    environment=ENVIRONMENT,
     # If you wish to associate users to errors (assuming you are using
     # django.contrib.auth) you may enable sending PII data.
-    send_default_pii=True
+    send_default_pii=True,
 )

@@ -25,10 +25,10 @@ Instead of randomly choosing questions, select the ones that could untie the top
 1. Collection database 
 2. Add answer for characters 
 3. Translate to english
-4. Change probability to some constant and show only after this probability is more. 
+4. **Change probability to some constant and show only after this probability is more.** 
 5. Add changing answer for question. 
-6. Change generating next question. Not use randomly use smart things
+6. **Change generating next question. Not use randomly use smart things**
 7. Change button for answers and questions for new user. Ask questions from fix guess character.  
 8. **Добавить все в docker-compose and heroku**
-9. Add sentry for logging
+9. **Add sentry for logging**
 10. **Add command to create superuser with password ruslan and ruslan** 

@@ -32,7 +32,6 @@ class WebDriver:
         chrome_options.add_argument("--headless")
         chrome_options.add_argument("--disable-dev-shm-usage")
         chrome_options.add_argument("--no-sandbox")
-        print('chrome_options', chrome_options)
         # executable_path = BASE_DIR + "/../chromedriver_93"
         self.driver = webdriver.Chrome(
             executable_path=os.environ.get("CHROMEDRIVER_PATH"), options=chrome_options
