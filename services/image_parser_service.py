@@ -28,10 +28,14 @@ def handle_certain_exceptions(func):
 class WebDriver:
     def __init__(self):
         chrome_options = Options()
+        chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
         chrome_options.add_argument("--headless")
-        executable_path = BASE_DIR + "/../chromedriver_93"
+        chrome_options.add_argument("--disable-dev-shm-usage")
+        chrome_options.add_argument("--no-sandbox")
+        print('chrome_options', chrome_options)
+        # executable_path = BASE_DIR + "/../chromedriver_93"
         self.driver = webdriver.Chrome(
-            executable_path=executable_path, options=chrome_options
+            executable_path=os.environ.get("CHROMEDRIVER_PATH"), options=chrome_options
         )
 
     def find(self, search_name):
