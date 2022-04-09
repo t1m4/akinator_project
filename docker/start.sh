@@ -8,5 +8,6 @@ if [[ $ENVIRONMENT == "local" ]]; then
     bash docker/init.sh
     exec python manage.py runserver 0.0.0.0:8000 --traceback --insecure
 else
-    exec gunicorn -b 0.0.0.0:8000 wsgi --timeout=360 --worker-class=gevent --workers ${GUNICORN_WORKERS} --statsd-host ${DATADOG_STATSD_HOST}:${DATADOG_STATSD_PORT} --dogstatsd-tags facebook-instagram
+#    exec gunicorn -b 0.0.0.0:8000 wsgi --timeout=360 --worker-class=gevent --workers ${GUNICORN_WORKERS} --statsd-host ${DATADOG_STATSD_HOST}:${DATADOG_STATSD_PORT} --dogstatsd-tags facebook-instagram
+    exec gunicorn akinator_platform.wsgi --log-file -
 fi
