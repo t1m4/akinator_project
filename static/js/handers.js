@@ -3,6 +3,7 @@ function logHandler(data) {
 }
 
 function yesAnswerHandler() {
+    hideObject(characterImageContainer)
     hideObject(userFinishAnswerContainer)
     hideObject(characterPredictedYesAnswerContainer)
     hideObject(characterPredictedNoAnswerContainer)
@@ -64,4 +65,5 @@ function noAnswerHandler() {
     hideObject(characterPredictedYesAnswerContainer)
     hideObject(characterPredictedNoAnswerContainer)
     hideObject(characterPredictedContainer)
+    hideObject(characterImageContainer)
 }

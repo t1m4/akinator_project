@@ -3,7 +3,10 @@
 function handleFinishGameRequest(character_data) {
     if (!isNullVariable(character_data['image_url'])) {
         setImageMeta(character_data['image_url']);
-
+        showObject(characterImageContainer)
+    }
+    else{
+        hideObject(characterImageContainer)
     }
     hideObject(answerContainer)
     showObject(userFinishAnswerContainer)
@@ -39,9 +42,9 @@ function nextQuestionEventListener(event) {
         return
     }
     let new_answer = {
-            'id': currentQuestion["id"],
-            'answer': user_answer,
-        }
+        'id': currentQuestion["id"],
+        'answer': user_answer,
+    }
     let new_game_data = {game_data}
     new_game_data['answers'] = [
         new_answer
