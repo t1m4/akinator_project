@@ -131,7 +131,7 @@ def main():
 
     question_objects = []
     for question in fixtures_questions:
-        new_question = models.Question(id=100000 + question['id'], name=question['name'])
+        new_question = models.Question(id=question['id'], name=question['name'])
         question_objects.append(new_question)
 
     models.Question.objects.bulk_create(question_objects)

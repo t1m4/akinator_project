@@ -156,7 +156,7 @@ def main():
     for index, character in enumerate(fixtures_characters):
         character_answers_ids = [i['id'] for i in character['answers']]
 
-        new_character = models.Character(id=100000 + index + 1, name=character['name'], answers=character['answers'],
+        new_character = models.Character(id=index + 1, name=character['name'], answers=character['answers'],
                                         questions_ids=character_answers_ids, image_url=character['image_url'])
         character_objects.append(new_character)
 
