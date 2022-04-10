@@ -1,5 +1,6 @@
 import random
 
+from ipware import get_client_ip
 from rest_framework import serializers
 
 from akinator_api import models, services, tasks
@@ -60,15 +61,21 @@ class UserGameSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.UserGame
         read_only_fields = ("predicted_character", "probabilities")
-        exclude = ("questions_ids",)
+        exclude = ("questions_ids", "ip_address")
         # exclude = ('probabilities', 'questions_ids')
 
     def create(self, validated_data):
         instance = super().create(validated_data)
+        update_fields = []
+        client_address, _ = get_client_ip(self.context['request'])
+        if client_address:
+            instance.ip_address = client_address
+            update_fields.append('ip_address')
         if not validated_data.get("questions_ids"):
             answers = validated_data.get("answers")
             instance.questions_ids = [answer["id"] for answer in answers]
-            instance.save(update_fields=["questions_ids"])
+            update_fields.append("questions_ids")
+        instance.save(update_fields=update_fields)
         return instance
 
     def update(self, instance, validated_data):

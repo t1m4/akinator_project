@@ -22,6 +22,7 @@ class UserGameAdmin(admin.ModelAdmin):
         "is_finished",
         "user_answer",
         "user_character_id",
+        "ip_address",
     ]
 
 

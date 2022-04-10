@@ -29,3 +29,4 @@ class UserGame(ModelWithCreateAndUpdateDates):
 
     # ProbabilityService
     probabilities = JSONField(null=True, blank=True, default=dict)
+    ip_address = models.CharField(max_length=100, null=True, blank=True)
