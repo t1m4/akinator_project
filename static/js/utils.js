@@ -86,4 +86,6 @@ function clearLocalStorage(){
 
 function clearInput(){
     saveCharacterInputContainer.value = ""
+    newQuestion.value = ""
+    newQuestionAnswer.value = ""
 }
