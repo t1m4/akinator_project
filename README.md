@@ -23,7 +23,7 @@ Instead of randomly choosing questions, select the ones that could untie the top
 
 
 1. Collection database 
-2. Add answer for characters 
+2. **Add answer for characters** 
 3. Translate to english
 4. **Change probability to some constant and show only after this probability is more.** 
 5. Add changing answer for question. 
@@ -33,3 +33,9 @@ Instead of randomly choosing questions, select the ones that could untie the top
 9. **Add sentry for logging**
 10. **Add command to create superuser with password ruslan and ruslan** 
 11. Написать описание игры + добавить инструкцию для создания вопросов.
+12. ДОбавить сохранение ip address участника 
+
+
+Инструкция
+1. Начните игру.
+2. 
