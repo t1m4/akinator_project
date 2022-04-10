@@ -63,6 +63,22 @@ class UserGameSerializer(serializers.ModelSerializer):
         exclude = ("questions_ids",)
         # exclude = ('probabilities', 'questions_ids')
 
+    def create(self, validated_data):
+        instance = super().create(validated_data)
+        if not validated_data.get("questions_ids"):
+            answers = validated_data.get("answers")
+            instance.questions_ids = [answer["id"] for answer in answers]
+            instance.save(update_fields=["questions_ids"])
+        return instance
+
+    def update(self, instance, validated_data):
+        super().update(instance, validated_data)
+        if not validated_data.get("questions_ids"):
+            answers = validated_data.get("answers")
+            instance.questions_ids = [answer["id"] for answer in answers]
+            instance.save(update_fields=["questions_ids"])
+        return instance
+
 
 class UserGameAnswerSerializer(serializers.Serializer):
     answers = AnswerSerializer(many=True, required=True)

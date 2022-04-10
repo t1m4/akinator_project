@@ -55,16 +55,17 @@
                 </li>
 
                 <form action="" class="user-predicted-no-add-buttons" style="visibility:hidden">
+                <h5>Добавьте новые вопросы для персонажа(неограниченное кол-во) или просто сохраните имя пользователя.</h5>
                     <ul>
                         <li>
-                            <span>Напишите вопрос:  </span>
+                            <span>Напишите вопрос: </span>
                             <input type="text" name="new_question" class="user-new-question" required>
                             <span>Выберите ответ(уверенность от 1 до 5)</span>
-                            <input type="text" name="new_question_answer" class="user-new-question-answer" required>
+                            <input type="number" min="1" max="5" name="new_question_answer" class="user-new-question-answer" required>
                         </li>
 
                     </ul>
-                    <button type="submit" class="btn btn-primary next-question">
+                    <button type="submit" class="btn btn-primary new-question-button">
                         Добавить вопрос к персонажу(не обязательно)
                     </button>
                     <br>

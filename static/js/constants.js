@@ -30,8 +30,14 @@ let characterPredictedAddButtonsContainer = document.querySelector('.user-predic
 let saveCharacterButtonContainer = document.querySelector('.save-user-character-button')
 let saveCharacterInputContainer = document.querySelector('.user-character-name-input')
 
+let newQuestionButton = document.querySelector('.new-question-button')
+let newQuestion = document.querySelector('.user-new-question')
+let newQuestionAnswer = document.querySelector('.user-new-question-answer')
+
 characterPredictedYesAnswerContainer.addEventListener("change", () => yesAnswerHandler());
 characterPredictedNoAnswerContainer.addEventListener("change", () => noAnswerHandler());
 
 // saveCharacterButtonContainer.addEventListener('click', saveCharacterHandler)
 saveCharacterButtonContainer.addEventListener('click', (e) => saveCharacterHandler(e))
+
+newQuestionButton.addEventListener('click', (e) => addNewQuestion(e))

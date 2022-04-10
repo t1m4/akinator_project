@@ -67,3 +67,44 @@ function noAnswerHandler() {
     hideObject(characterPredictedContainer)
     hideObject(characterImageContainer)
 }
+
+function handleCreateNewQuestion(data) {
+    let questionId = data['id']
+
+    let probabilities = {
+        1: 0,
+        2: 0.25,
+        3: 0.5,
+        4: 0.75,
+        5: 1,
+    }
+    let answerValue = parseInt(newQuestionAnswer.value)
+    let probability_of_question = probabilities[answerValue]
+
+    let current_game = JSON.parse(localStorage.getItem(gameName))
+    current_game.answers.push({
+        "id": questionId,
+        "answer": probability_of_question
+    })
+    localStorage.setItem(gameName, JSON.stringify(current_game));
+    newQuestion.value = ""
+    newQuestionAnswer.value = ""
+
+}
+
+function addNewQuestion(event) {
+    event.preventDefault()
+    let questionNameValue = newQuestion.value
+    if (questionNameValue == null || questionNameValue === "") {
+        alert("Вы должны ввести вопрос")
+        return
+    }
+    let answerValue = parseInt(newQuestionAnswer.value)
+    if (answerValue == null || isNaN(answerValue) || answerValue === "" || answerValue < 1 || answerValue > 5) {
+        alert("Вы должны ввести ответ от 1 до 5")
+        return
+    }
+
+    make_request(`/api/questions/`, handleCreateNewQuestion, "POST", {'name': questionNameValue})
+
+}

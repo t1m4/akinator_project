@@ -32,3 +32,4 @@ Instead of randomly choosing questions, select the ones that could untie the top
 8. **Добавить все в docker-compose and heroku**
 9. **Add sentry for logging**
 10. **Add command to create superuser with password ruslan and ruslan** 
+11. Написать описание игры + добавить инструкцию для создания вопросов.
