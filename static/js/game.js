@@ -57,7 +57,7 @@ function nextQuestionEventListener(event) {
         new_game_data['id'] = parseInt(localStorage.getItem(gameIdName))
     }
     //TODO uncomment
-    // clearRadioButtons()
+    clearRadioButtons()
     make_request(`/api/games/${gameId}/add_answers/`, handleNextQuestionRequest, "POST", new_game_data)
 }
 
