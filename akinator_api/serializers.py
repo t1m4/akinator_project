@@ -107,34 +107,27 @@ class UserGameAnswerSerializer(serializers.Serializer):
         length_of_answers = len(game_object.answers)
         result = sorted(probabilities, key=lambda p: p["probability"], reverse=True)[0]
         if (
-            len(questions_left) == 0
-            or length_of_answers > 2
-            and result["probability"] > 0.9
-            or length_of_answers > 5
-            and result["probability"] > 0.8
-            or length_of_answers == 20
+                len(questions_left) == 0
+                or length_of_answers > 2
+                and result["probability"] > 0.9
+                or length_of_answers > 5
+                and result["probability"] > 0.8
+                or length_of_answers == 20
         ):
-            # result = sorted(
-            #     probabilities, key=lambda p: p["probability"], reverse=True
-            # )[0]
-            game_object.predicted_character = models.Character.objects.get(
-                id=result["id"]
-            )
-            game_object.save(update_fields=["predicted_character"])
-            # print(f"You got winner. This is your guess {result}")
-            result["is_finished"] = True
-            return result
+            return self.finish_game(game_object, result)
         else:
             next_question = None
-            if length_of_answers > 10:
+            if length_of_answers > 1:
                 next_question_id = self._find_the_most_probable_question(
                     probabilities, answers_questions_ids
                 )
+                if next_question_id == 'is_finished':
+                    return self.finish_game(game_object, result)
                 if next_question_id:
                     next_question = (
                         questions_left.filter(id=next_question_id)
-                        .values("id", "name")
-                        .first()
+                            .values("id", "name")
+                            .first()
                     )
             if not next_question:
                 next_question = random.choice(questions_left)
@@ -149,12 +142,42 @@ class UserGameAnswerSerializer(serializers.Serializer):
         TODO May me it's not a good idea to to so. But it's useful after many question. For examples, after 10 questions.
             We take most probable character, and ask his questions.
         """
-        character_id_with_most_probability = sorted(
+        # character_id_with_most_probability = sorted(
+        #     probabilities, key=lambda p: p["probability"], reverse=True
+        # )[0]["id"]
+        # character_with_most_probability = models.Character.objects.get(
+        #     id=character_id_with_most_probability
+        # )
+        # for answer in character_with_most_probability.answers:
+        #     character_question_id = answer['id']
+        #     answer_value = answer['answer']
+        #     print(answer)
+        #     if character_question_id not in answers_questions_ids and answer_value > 0.75:
+        #         print("return character question_", character_with_most_probability, character_question_id, "\n")
+        #         return character_question_id
+
+        characters_with_most_probability = sorted(
             probabilities, key=lambda p: p["probability"], reverse=True
-        )[0]["id"]
-        character_with_most_probability = models.Character.objects.get(
-            id=character_id_with_most_probability
         )
-        for character_question_id in character_with_most_probability.questions_ids:
-            if character_question_id not in answers_questions_ids:
-                return character_question_id
+        next_character_probabilities = characters_with_most_probability[1]['probability']
+        for index, character_probability in enumerate(characters_with_most_probability):
+            if character_probability['probability'] > 100 * next_character_probabilities:
+                return 'is_finished'
+            character = models.Character.objects.get(
+                id=character_probability['id']
+            )
+            for answer in character.answers:
+                character_question_id = answer['id']
+                answer_value = answer['answer']
+                # print(next_character_probabilities, character_probability['probability'], answer)
+                if character_question_id not in answers_questions_ids and answer_value > 0.75:
+                    # print("return character question_", character, character_question_id, "\n")
+                    return character_question_id
+            next_character_probabilities = character_probability['probability']
+
+    @staticmethod
+    def finish_game(game_object, result):
+        game_object.predicted_character = models.Character.objects.get(id=result["id"])
+        game_object.save(update_fields=["predicted_character"])
+        result["is_finished"] = True
+        return result
