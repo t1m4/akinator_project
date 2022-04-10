@@ -111,6 +111,7 @@ class UserGameAnswerSerializer(serializers.Serializer):
             and result["probability"] > 0.9
             or length_of_answers > 5
             and result["probability"] > 0.8
+            or length_of_answers == 20
         ):
             # result = sorted(
             #     probabilities, key=lambda p: p["probability"], reverse=True
