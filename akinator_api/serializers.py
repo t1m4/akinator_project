@@ -102,6 +102,7 @@ class UserGameAnswerSerializer(serializers.Serializer):
         questions_left = models.Question.objects.exclude(
             id__in=answers_questions_ids
         ).values("id", "name")
+        print("probabilities", probabilities)
 
         length_of_answers = len(game_object.answers)
         result = sorted(probabilities, key=lambda p: p["probability"], reverse=True)[0]
@@ -136,10 +137,10 @@ class UserGameAnswerSerializer(serializers.Serializer):
                         .first()
                     )
             if not next_question:
-                # next_question = random.choice(questions_left)
-                next_question = (
-                    questions_left.order_by("id").values("id", "name").first()
-                )
+                next_question = random.choice(questions_left)
+                # next_question = (
+                #     questions_left.order_by("id").values("id", "name").first()
+                # )
             return next_question
 
     @staticmethod
