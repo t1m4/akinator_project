@@ -121,11 +121,11 @@ class ProbabilityService(object):
                     best_entropy = new_entropy
                     next_question = question
         print("new - {}, old = {}".format(best_entropy, current_entropy))
-        # if not next_question:
-        #     for answer in character_with_most_probability.answers:
-        #         character_question_id = answer['id']
-        #         answer_value = answer['answer']
-        #         if character_question_id not in answers_questions_ids and answer_value >= 0.75:
-        #             next_question = questions_left.filter(id=answer['id']).values("id", "name").first()
+        if not next_question:
+            for answer in character_with_most_probability.answers:
+                character_question_id = answer['id']
+                answer_value = answer['answer']
+                if character_question_id not in answers_questions_ids and answer_value >= 0.75:
+                    next_question = questions_left.filter(id=answer['id']).values("id", "name").first()
 
         return next_question
