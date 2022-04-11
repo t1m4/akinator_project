@@ -108,10 +108,10 @@ class UserGameAnswerSerializer(serializers.Serializer):
         result = sorted(probabilities, key=lambda p: p["probability"], reverse=True)[0]
         if (
                 len(questions_left) == 0
-                or length_of_answers > 2
+                or length_of_answers > 3
+                and result["probability"] > 0.95
+                or length_of_answers > 10
                 and result["probability"] > 0.9
-                or length_of_answers > 5
-                and result["probability"] > 0.8
                 or length_of_answers == 20
         ):
             return self.finish_game(game_object, result)
