@@ -131,7 +131,9 @@ class UserGameAnswerSerializer(serializers.Serializer):
             #                 .first()
             #         )
             if not next_question:
-                next_question = random.choice(questions_left)
+                return self.finish_game(game_object, result)
+
+                # next_question = random.choice(questions_left)
                 # next_question = (
                 #     questions_left.order_by("id").values("id", "name").first()
                 # )
