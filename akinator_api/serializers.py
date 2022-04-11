@@ -116,19 +116,20 @@ class UserGameAnswerSerializer(serializers.Serializer):
         ):
             return self.finish_game(game_object, result)
         else:
-            next_question = None
-            if length_of_answers > 1:
-                next_question_id = self._find_the_most_probable_question(
-                    probabilities, answers_questions_ids
-                )
-                if next_question_id == 'is_finished':
-                    return self.finish_game(game_object, result)
-                if next_question_id:
-                    next_question = (
-                        questions_left.filter(id=next_question_id)
-                            .values("id", "name")
-                            .first()
-                    )
+            next_question = service_object.find_next_question(probabilities, questions_left, answers_questions_ids)
+            # next_question = None
+            # if length_of_answers > 1:
+            #     next_question_id = self._find_the_most_probable_question(
+            #         probabilities, answers_questions_ids
+            #     )
+            #     if next_question_id == 'is_finished':
+            #         return self.finish_game(game_object, result)
+            #     if next_question_id:
+            #         next_question = (
+            #             questions_left.filter(id=next_question_id)
+            #                 .values("id", "name")
+            #                 .first()
+            #         )
             if not next_question:
                 next_question = random.choice(questions_left)
                 # next_question = (
