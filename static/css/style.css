@@ -1,0 +1,22 @@
+ul {
+    list-style: none;
+}
+.user-finish-answer-container input[type=radio] {
+    visibility:hidden;
+}
+label {
+    cursor: pointer;
+}
+input:checked + label {
+    background: #04917e;
+}
+input + label {
+    color: black;
+    border: 1px solid #04917e;
+    width: 400px;
+    height: 50px;
+}
+
+button{
+    margin: 10px;
+}

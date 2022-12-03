@@ -1,0 +1,31 @@
+from django.contrib import admin
+
+# Register your models here.
+from akinator_api import models
+
+
+class CharacterAdmin(admin.ModelAdmin):
+    list_display = ["id", "name", "image_url", "answers", "questions_ids"]
+
+
+class QuestionAdmin(admin.ModelAdmin):
+    list_display = ["id", "name"]
+
+
+class UserGameAdmin(admin.ModelAdmin):
+    list_display = [
+        "id",
+        "answers",
+        "questions_ids",
+        "predicted_character",
+        "is_success_predicted",
+        "is_finished",
+        "user_answer",
+        "user_character_id",
+        "ip_address",
+    ]
+
+
+admin.site.register(models.Character, CharacterAdmin)
+admin.site.register(models.Question, QuestionAdmin)
+admin.site.register(models.UserGame, UserGameAdmin)

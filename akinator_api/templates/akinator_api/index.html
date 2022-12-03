@@ -1,0 +1,107 @@
+{% extends  "base.html" %}
+{% load bootstrap4 %}
+{% load static %}
+
+{% block content %}
+    {% if characters_count %}
+        <h1>Total number of characters {{ characters_count }}</h1>
+    {% endif %}
+{% endblock %}
+
+
+{% block body %}
+    <div style=" text-align: center">
+    <h1> <a href="https://t1m4.notion.site/7a03d668b03346c7acfcac3c00ba49cd" target="_blank">Инструкция </a> к игре</h1>
+        <button type="link" class="btn btn-primary text-center start-game" style="visibility:visible">
+            Начать новую игру!!!
+        </button>
+
+        <!--    <button type="link" class="btn btn-primary text-center continue-game" style="visibility:hidden">-->
+        <button type="link" class="btn btn-primary text-center continue-game" style="visibility:visible">
+            Продолжить игру!!!
+        </button>
+
+        <br>
+        <br>
+
+        <div class="answer-container" style="visibility:hidden">
+            <h1 class="question-text">Ответьте на вопрос: {{ question_text }}</h1>
+            <form class="question-form">
+                <label class="checkbox-label"><input type="radio" name="radio" value="0" required/> 1) Нет</label><br/>
+                <label class="checkbox-label"><input type="radio" name="radio" value="0.25" required/> 2) Возможно
+                    нет</label><br/>
+                <label class="checkbox-label"><input type="radio" name="radio" value="0.5" required/> 3) Не
+                    знаю</label><br/>
+                <label class="checkbox-label"><input type="radio" name="radio" value="0.75"
+                                                     required/> 4) Возможно</label><br/>
+                <label class="checkbox-label"><input type="radio" name="radio" value="1" required/> 5) Да</label><br/>
+                <br/>
+                <button type="submit" class="btn btn-primary next-question">
+                    Следующий вопрос
+                </button>
+
+            </form>
+        </div>
+
+        <div class="user-finish-answer-container" style="visibility:hidden">
+            <h3 class="user-predicted-character-name"></h3>
+            <ul>
+                <li class="user-predicted-yes">
+                    <input type='radio' value='1' name='radio' id='radio_yes'/>
+                    <label for='radio_yes'>Да, совпадает</label>
+                </li>
+                <li class="user-predicted-no">
+                    <input type='radio' value='0' name='radio' id='radio_no'/>
+                    <label for='radio_no'>Нет не совпадает, ввести своего:)</label>
+                </li>
+
+                <form action="" class="user-predicted-no-add-buttons" style="visibility:hidden">
+                <h5>Добавьте новые вопросы для персонажа(неограниченное кол-во) или просто сохраните имя пользователя.</h5>
+                    <ul>
+                        <li>
+                            <span>Напишите вопрос: </span>
+                            <input type="text" name="new_question" class="user-new-question" required>
+                            <span>Выберите ответ(уверенность от 1 до 5)</span>
+                            <input type="number" min="1" max="5" name="new_question_answer" class="user-new-question-answer" required>
+                        </li>
+
+                    </ul>
+                    <button type="submit" class="btn btn-primary new-question-button">
+                        Добавить вопрос к персонажу(желательно)
+                    </button>
+                    <br>
+
+                    <label for="username">Введите имя:</label>
+                    <input type="text" id="username" name="username" class="user-character-name-input" required>
+                    <br>
+                    <input type="submit" value="Сохранить моего персонажа"
+                           class="save-user-character-button btn btn-primary">
+                    <br>
+                </form>
+                <br>
+
+
+            </ul>
+            <div class="character-image " style="visibility:visible">
+                <image></image>
+            </div>
+
+        </div>
+    </div>
+    <template id="productrow">
+        <tr>
+            <td class="record"></td>
+            <td></td>
+        </tr>
+    </template>
+
+
+{% endblock %}
+
+{% block scripts %}
+    <script type="text/javascript" src="{% static 'js/handers.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/constants.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/utils.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/start_game.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/game.js' %}"></script>
+{% endblock %}
